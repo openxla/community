@@ -1,11 +1,11 @@
-# Welcome to the SIG OpenXLA Community
+# Welcome to the OpenXLA Community
 
 ## This Repository 
 
-OpenXLA is currently a SIG under TensorFlow governance. The community repository will store documents used by the SIG OpenXLA developer community:
+OpenXLA is currently a SIG under TensorFlow governance. The community repository will store documents used by the OpenXLA developer community:
 
-* **Governance** - Operating processes for SIG OpenXLA
-* **Community Meetings** - Schedule, agenda & minutes for public SIG OpenXLA community meetings
+* **Governance** - Operating processes for OpenXLA
+* **Community Meetings** - Schedule, agenda & minutes for public OpenXLA community meetings
 * **GitHub Discussions** - Meta-conversations about the OpenXLA project. Please use repo-level GitHub Discussions for conversations about code. 
 
 ## Contacts
@@ -23,5 +23,5 @@ For administrative questions, contact Thea Lamkin - thealamkin at google
 * Community meetings TBA
 
 ## Code of Conduct
-While under TensorFlow governance, all community spaces for SIG OpenXLA are subject to the [TensorFlow Code of Conduct](https://github.com/tensorflow/community/blob/master/CODE_OF_CONDUCT.md).
+While under TensorFlow governance, all community spaces for OpenXLA are subject to the [TensorFlow Code of Conduct](https://github.com/tensorflow/community/blob/master/CODE_OF_CONDUCT.md).
 
