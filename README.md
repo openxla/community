@@ -18,7 +18,7 @@ For administrative questions, contact Thea Lamkin - thealamkin at google
 
 * SIG OpenXLA Charter 
 * GitHub ([current](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/compiler/xla))
-* Discord TBA
+* Discord ([Invite](https://discord.gg/UcUbMR5A))
 * Community proposals TBA
 * Community calendar TBA
 
