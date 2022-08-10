@@ -1,4 +1,4 @@
-# OpenXLA Meeting Artefacts 
+# OpenXLA Meeting Archive 
 
 A repository of minutes & slides for OpenXLA project meetings. 
 
