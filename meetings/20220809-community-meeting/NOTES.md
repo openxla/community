@@ -1,3 +1,12 @@
+# SIG OpenXLA Community Meeting
+## Meeting Info
+
+Date/time: August 9, 2022, 9-10AM PDT
+Host: Thea Lamkin (Google)
+Scribe: James Rubin (Google)
+
+## Notes
+
 * [Thea Lamkin] kicks off the first Public SIG OpenXLA meeting. Thanks everyone involved for making this possible. 
   * Housekeeping: Overview of OpenXLA meeting cadence, structure, and tools
     * Rotating host and scribe: host will have expectation of agenda and managing meeting minutes
