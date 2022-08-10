@@ -2,7 +2,9 @@
 ## Meeting Info
 
 Date/time: August 9, 2022, 9-10AM PDT
+
 Host: Thea Lamkin (Google)
+
 Scribe: James Rubin (Google)
 
 ## Notes
