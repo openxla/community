@@ -68,7 +68,7 @@ Scribe: James Rubin (Google)
   * **Eugene**: Proposal is to bootstrap StableHLO from MHLO
     * Indeed, MHLO is just one of the ML compute opsets in the community - you mentioned ONNX, there are also TOSA, MIL and others.
     * HLO/MHLO have historically been XLA's input formats, so there's a natural alignment, hence the proposal.
-    * I have further thoughts about this, but I don't think we have the time to discuss this at the moment. If you're interested in talking more, please reach out at GitHub Discussions or on [Discord](https://discord.com/invite/UcUbMR5A).
+    * I have further thoughts about this, but I don't think we have the time to discuss this at the moment. If you're interested in talking more, please reach out at GitHub Discussions or on [Discord](https://discord.gg/qmYw59RzwC).
 * **Thea**: introduces SIG collaboration presentation. She proposes:
   * The different channels for discussions and collaboration
   * Scheduled synchronous meetings. We could make this an option if that is potentially more useful.
