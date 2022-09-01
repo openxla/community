@@ -6,7 +6,7 @@ OpenXLA is currently a SIG under TensorFlow governance. The community repository
 
 * **Governance** - Operating processes for OpenXLA
 * **[Community Meetings](https://github.com/openxla/community/wiki/OpenXLA-Community-Meetings)** - Schedule, agenda & minutes for public OpenXLA community meetings
-* **[GitHub Discussions](https://github.com/openxla/community/discussions)** - Technical and community onversations about the OpenXLA project & its components.
+* **[GitHub Discussions](https://github.com/openxla/community/discussions)** - Technical and community conversations about the OpenXLA project & its components.
 
 ## Contacts
 
