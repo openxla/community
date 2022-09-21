@@ -1,6 +1,6 @@
 # SIG OpenXLA Meeting Minutes 09/20 8AM PT
 
-Please see the [slide deck](https://github.com/openxla/community/blob/main/meetings/20220920-community-meeting/%5BPublic%5D%20SIG%20OpenXLA%20Meeting%202022.9.20.pdf) for in-depth content.
+Please see the [slide deck](https://github.com/openxla/community/blob/main/meetings/20220920-community-meeting/%5BPublic%5D%20SIG%20OpenXLA%20Meeting%202022.9.20.pdf) for in-depth content. XLA Runtime Video available on [Youtube](https://www.youtube.com/watch?v=ZGkzlapWUzU)
 
 # Notes
 
