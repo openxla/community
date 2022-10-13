@@ -7,7 +7,7 @@ Location: [Zoom](https://us02web.zoom.us/j/87557882524?pwd=QUJZQlZub0tRTk1CbCt4e
 [20-30 min] Technical presentations: 
   * StableHLO compatibility (Kevin Gleason, Google)
   * TBC 
-  * Cuda Graph RFC (Eugene Zhulenev, Google)
+  * CUDA Graph RFC (Eugene Zhulenev, Google)
  
 [10 min] Updated timeline for XLA migration
 
