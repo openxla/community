@@ -1,4 +1,4 @@
-Date: 2022-11-11
+Date: 2022-11-15
 Time: 8AM - 9AM PST (4PM - 5PM UTC)
 Location: [Zoom](https://us02web.zoom.us/j/87557882524?pwd=QUJZQlZub0tRTk1CbCt4eFYzZ0lJUT09)
 
