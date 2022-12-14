@@ -21,6 +21,12 @@ For administrative questions, contact Thea Lamkin - thealamkin at google
 * [SIG OpenXLA Charter](https://github.com/tensorflow/community/blob/master/sigs/openxla/CHARTER.md): Our project charter while under TensorFlow governance. 
 * Community proposals TBA
 
+## Repositories
+
+* [StableHLO](https://github.com/openxla/stablehlo): Portability layer between ML frameworks and ML compilers.
+* [XLA](https://github.com/openxla/xla): Main XLA codebase (being migrated from tensorflow/compiler/xla).
+* [IREE](https://github.com/iree-org/iree): MLIR-based end-to-end compiler and runtime for ML models (being migrated from [iree-org](https://github.com/iree-org)). Note that IREE has its own comms channels (see its README).
+
 ## Code of Conduct
 While under TensorFlow governance, all community spaces for OpenXLA are subject to the [TensorFlow Code of Conduct](https://github.com/tensorflow/community/blob/master/CODE_OF_CONDUCT.md).
 
