@@ -3,7 +3,7 @@ Date: 2023-1-24 Time: 8AM - 9AM PST (4PM - 5PM UTC) Location: [Zoom](https://us0
 [10 min] Welcomes & housekeeping
 
 [30-40 min] Technical presentations:
-- StableHLO Specification RFC (Sandeep Dasgupta, Google)
+- StableHLO Specification (Sandeep Dasgupta, Google)
 - [TBD] AWS
 
 [10 min] Community updates 
