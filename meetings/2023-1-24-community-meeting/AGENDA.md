@@ -1,4 +1,4 @@
-Date: 2023-1-24 Time: 8AM - 9AM PST (4PM - 5PM UTC) Location: [Zoom](https://us02web.zoom.us/wc/87557882524/join?wpk=wcpk%7B0%7D%26%26%26%26wcpkc65c852cc774351b685f019def000f61&_x_zm_rtaid=kUKaZHalRVWzqzMqNkpVbQ.1674247445611.75ee44b9b57ad68c8c29181941a4b022&_x_zm_rhtaid=479)
+Date: 2023-1-24 Time: 8AM - 9AM PST (4PM - 5PM UTC) Location: [Zoom](https://us02web.zoom.us/j/87557882524?pwd=QUJZQlZub0tRTk1CbCt4eFYzZ0lJUT09)
 
 [10 min] Welcomes & housekeeping
 
