@@ -52,7 +52,7 @@ Technical governance is strictly separated from business governance. Membership 
 
 ## Module Maintainers
 
-Modules are defined as GitHub repositories within the OpenXLA org, or as well-identified directories within the core repository `openxla/xla`.
+Modules are defined as GitHub repositories within the OpenXLA org, or as well-identified directories within the core repositories.
 
 Each module will have its own group of maintainers, who are responsible for reviewing and approving commits, improving design, and refining the scope of the module. Module maintainers decide on each particular issue brought to them based on a blocking consensus. 
 
@@ -139,7 +139,7 @@ The Core Maintainers are responsible for evaluating the Nomination, with a clear
 * After a removal of the Lead Core Maintainer or in unforeseen
   circumstances (such as permanent unavailability of the Lead Core
   Maintainer), the Core Maintainers follow a Ranked-Choice voting
-  method to elect a new Lead Core Maintainer.
+  method (TODO specific tool/process) to elect a new Lead Core Maintainer.
 * The Lead Core Maintainer is nominated for a 1 year term (TBC).
 
 ### Add, Remove, and Re-Scope Modules and Projects
@@ -210,7 +210,7 @@ If the change is relatively minor, a pull request on GitHub can be opened up imm
 
 **Q: Can I become a committer on the project?** 
 
-All contributions are going through pull requests and approved by maintainers. At the moment, the process for landing a pull request into OpenXLA varies with the exact repository. For example StableHLO is purely developed on GitHub and a pull request can be merged through the GitHub UI. On the other hand, the XLA compiler repository involves an interaction with Google internal infrastructure that can only be triggered by Google employees who will play the janitorial role of ensuring prompt merging after approval.
+All contributions are going through pull requests and approved by maintainers. Currently, the process for landing a pull request into OpenXLA varies with the exact repository. For example StableHLO is purely developed on GitHub and a pull request can be merged through the GitHub UI. On the other hand, the XLA compiler repository involves an interaction with Google internal infrastructure that can only be triggered by Google employees who will play the janitorial role of ensuring prompt merging after approval. In other repositories, such as `xla`, Google are working to expand committer groups to individuals outside of Google, and will provide updates when the tooling exists to allow this.
 
 **Q: What if I would like to deliver a OpenXLA tutorial at a conference or otherwise? Do I need to be 'officially' a maintainer to do this?** 
 
