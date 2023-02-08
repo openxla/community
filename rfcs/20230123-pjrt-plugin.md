@@ -80,6 +80,11 @@ Status LoadPjrtPlugin(string library_path, map<string, string> config_values) {
   if (function_prt != nullptr) {
      PJRT_Api* api = function_prt();
      plugin_name = parse(library_path);
+     if (auto it = global_pjrt_plugin_map.find(plugin_name);
+         it != global_pjrt_plugin_map.end()) {
+       // Allows to the same plugin multiple times.
+       return;
+     }
      PluginInfo plugin_info(api, config_values);
      global_pjrt_plugin_map[plugin_name] = plugin_info;
   }
@@ -159,15 +164,14 @@ Open questions:
     client? For example, these two functions in
     [tpu_initializer_helper.cc](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/compiler/xla/stream_executor/tpu/tpu_initializer_helper.cc#L269-L270)
     should be run when initializing TPU. Currently they are called every time a
-    PJRT TPU client is created. Shall we add another method InitializePlugin and
-    only run it once? Alternatively, the plugin can implement it in
-    `PJRT_Client_Create` and run it once in the first time a client was created.
-*   Do we want to create PJRT clients for every plugin that is found? Will that
-    involve some initialization for the device which should not run multiple
-    times?
+    PJRT TPU client is created. One solution is to place this initizliation in 
+    method `GetPjrtApi`. It will run the first time that a plugin is loaded.
+*   It is not desired to create PJRT clients for every plugin that is found as
+    that will increase resource utilization. Framework decides what behavior
+    they prefer.
     *   We may need to store loaded PluginInfo in a nested map `map<device_type,
-        <plugin_name, PluginInfo>>` if we want to know what plugins are
-        available for a device (e.g. current PJRT GPU and IREE GPU) and only
+        <plugin_name, PluginInfo>>` if the framework wants to know what plugins
+        are available for a device (e.g. current PJRT GPU and IREE GPU) and only
         create one PJRT client per device.
 
 ### <a name="heading=h.bjuf0soco0sj"></a> Config values for creating PJRT client(s)
@@ -207,6 +211,14 @@ it is used, or created in a plugin custom op kernel. Created PJRT clients will
 be saved in the
 [global TensorFlow ResourceManager](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/core/tfrt/common/pjrt_util.h#L26).
 
+Whether multiple frameworks can create a client for the same device is up to the 
+specific hardware and plugin implementation. If the hardware only allows
+exclusive access, then the software will abide by that constraint. Otherwise,
+some plugins may use the hardware in an exclusive way (ie. allocate all memory).
+The openxla plugin that we envision now will default to allowing multiple clients
+and supporting on demand memory allocation (with a possible option for more greedy
+access as an optimization for cases that need it).
+
 For more information about PJRT, please consult the PJRT
 [C header](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/compiler/xla/pjrt/c/pjrt_c_api.h),
 [C++ header](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/compiler/xla/pjrt/pjrt_client.h),
@@ -214,8 +226,15 @@ For more information about PJRT, please consult the PJRT
 and
 [integration guide](https://docs.google.com/document/d/1EL62DkASMFZbk89K6MIPNGUFBTbkC21v5-uL5fB8VsM/edit).
 
-## Future improvments
-* Windows support.
+## Open questions and future improvments from the comments
+*   Windows support.
+*   Test suites for PJRT implementations.
+*   How to handle versioning or variants (e.g. x86, x86-64 and ARM CPUs, different
+    CUDA compute capability GPUs, DPUs, etc.).
+*   How does a device broadcast its capability or supported API calls?
+*   Support unload and reload a PJRT plugin (hot-swap/plug).
+*   Single vs Multi-process access/ ownership (maybe covered by IRFT).
+*   Command queues/buffer management APIs access, simple commands vs. transactional.
 
 ## Initial contribution
 
