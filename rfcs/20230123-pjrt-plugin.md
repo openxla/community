@@ -214,6 +214,9 @@ For more information about PJRT, please consult the PJRT
 and
 [integration guide](https://docs.google.com/document/d/1EL62DkASMFZbk89K6MIPNGUFBTbkC21v5-uL5fB8VsM/edit).
 
+## Future improvments
+* Windows support.
+
 ## Initial contribution
 
 We will use the plugin in
