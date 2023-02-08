@@ -2,17 +2,11 @@
 
 ## This Repository 
 
-OpenXLA is currently a SIG under TensorFlow governance. The community repository will store documents used by the OpenXLA developer community:
+OpenXLA is a community-driven, open source ML compiler ecosystem, using the best of XLA, MLIR, and IREE. The community repository stores documents used by the OpenXLA developer community:
 
-* **Governance** - Operating processes for OpenXLA
+* **[Governance](https://github.com/openxla/community/blob/main/GOVERNANCE.md)** - Operating processes for OpenXLA
 * **[Community Meetings](https://github.com/openxla/community/tree/main/meetings)** - Schedule, agenda & minutes for public OpenXLA community meetings
 * **[GitHub Discussions](https://github.com/openxla/community/discussions)** - Announcements & technical and community conversations about the OpenXLA project & its components.
-
-## Contacts
-
-For technical questions, contact Mehdi Amini - aminim at google
-
-For administrative questions, contact Thea Lamkin - thealamkin at google 
 
 ## Other Resources
 
@@ -28,5 +22,10 @@ For administrative questions, contact Thea Lamkin - thealamkin at google
 * [IREE](https://github.com/iree-org/iree): MLIR-based end-to-end compiler and runtime for ML models (being migrated from [iree-org](https://github.com/iree-org)). Note that IREE has its own comms channels (see its README).
 
 ## Code of Conduct
-While under TensorFlow governance, all community spaces for OpenXLA are subject to the [TensorFlow Code of Conduct](https://github.com/tensorflow/community/blob/master/CODE_OF_CONDUCT.md).
+Until an OpenXLA-specific Code of Conduct is in place, all community spaces for OpenXLA are subject to the [TensorFlow Code of Conduct](https://github.com/tensorflow/community/blob/master/CODE_OF_CONDUCT.md).
+
+## Contacts
+
+For administrative questions, contact Thea Lamkin - thealamkin at google 
+
 
