@@ -2,7 +2,7 @@
 
 ## This Repository 
 
-OpenXLA is a community-driven, open source ML compiler ecosystem, using the best of XLA, MLIR, and IREE. The community repository store documents used by the OpenXLA developer community:
+OpenXLA is a community-driven, open source ML compiler ecosystem, using the best of XLA, MLIR, and IREE. The community repository stores documents used by the OpenXLA developer community:
 
 * **[Governance](https://github.com/openxla/community/blob/main/GOVERNANCE.md)** - Operating processes for OpenXLA
 * **[Community Meetings](https://github.com/openxla/community/tree/main/meetings)** - Schedule, agenda & minutes for public OpenXLA community meetings
