@@ -12,7 +12,7 @@ OpenXLA is a community-driven, open source ML compiler ecosystem, using the best
 
 * [Community Calendar](https://calendar.google.com/calendar/u/0/embed?src=c_6e3fee8576a7e330003a3130f2c89726fe487f4b3f555a12edf8a2c49005f69b@group.calendar.google.com&ctz=America/Los_Angeles): Add to your calendar to subscribe to all community meetings & events. 
 * [Discord](https://discord.gg/PeWUTaecrA): Synchronous discussions. 
-* [SIG OpenXLA Charter](https://github.com/tensorflow/community/blob/master/sigs/openxla/CHARTER.md): Our project charter while under TensorFlow governance. 
+* [Google Drive Folder](https://drive.google.com/drive/folders/1617UbkYMZd-3PZB6Mx1AQe1xgeSQkP47?usp=sharing): Public files shared by project maintainers; viewable without a Google login. 
 * Community proposals TBA
 
 ## Repositories
