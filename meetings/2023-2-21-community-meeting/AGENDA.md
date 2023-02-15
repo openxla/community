@@ -3,7 +3,7 @@ Date: 2023-2-21 Time: 8AM - 9AM PST (4PM - 5PM UTC) Location: [Zoom](https://us0
 [10 min] Welcomes & housekeeping
 
 [30-40 min] Technical presentations:
-- Sparsity RFC (Aart Bik, Google)
+- StableHLO: [Sparsity RFC](https://github.com/openxla/stablehlo/pull/1143) (Aart Bik, Google)
 - Specs/Numerics Alignment RFC (Eric Kunze, ARM)
 
 [10 min] Community updates 
