@@ -1,12 +1,8 @@
 # Community docs
 
-This directory contains all the documentation for StableHLO, written in
-Markdown. It also includes `website` files that are used by the MkDocs build,
-which is defined by `.mkdocs.yml` in the repo root.
-
-Currently, only `index.md` and `spec.md` are include in the website navigation,
-but you can see the rendered markdown for other files in `docs/` by
-staging the website and then typing the filename in the URL path.
+This directory contains all the documentation for the OpenXLA website, written
+in Markdown. It also includes `website` files that are used by the MkDocs build,
+which is defined by `mkdocs.yml` in the repo root.
 
 ## Stage the website locally
 
