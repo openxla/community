@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+<!-- Site title (customized to remove site_name) -->
+{% block htmltitle %}
+  <title>{{ page.meta.title }}</title>
+{% endblock %}
+
+<!-- Theme-related style sheets (customized for landing page) -->
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ 'website/stylesheets/landing.css' | url }}" />
+{% endblock %}
+
+<!-- Sidebars (customized to add new HTML after the default "tabs") -->
+{% block tabs %}
+  {{ super() }}
+  <section class="oxla-section black md-typeset">
+    <div class="oxla-section-inner">
+      <div class="oxla-banner">
+        <div class="oxla-banner-left">
+          <h1 class="oxla-title">{{ page.meta.title }}</h1>
+          <p class="oxla-subtitle">{{ page.meta.subtitle }}</p>
+          <div class="oxla-buttons">
+            {% for button in page.meta.buttons %}
+            <a class="oxla-button" href="{{ button.href }}">{{ button.text }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+<!-- Page content -->
+{% block container %}
+  <div class="md-content" data-md-component="content">
+    <article class="md-content__inner md-typeset">
+      {% block content %}
+        {% include "partials/content.html" %}
+      {% endblock %}
+    </article>
+  </div>
+{% endblock %}

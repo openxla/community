@@ -1,0 +1,179 @@
+/* Styles for website/overrides/landing.html */
+/* Overrides */
+.md-header__topic {
+  opacity: 0;
+  font-weight: 700;
+}
+.md-header__button.md-icon {
+  display: none;
+}
+
+.md-header__button.md-logo {
+  display: initial;
+}
+.md-header__source {
+  display: initial;
+  width: 11.7rem;
+}
+.md-content h1 {
+  position: absolute;
+  top: 160px;
+  visibility: hidden;
+}
+.md-content__inner {
+  margin: 0;
+  padding: 0;
+}
+.md-main__inner {
+  margin: 0;
+  max-width: 100%;
+}
+.md-content__inner:before {
+  height: 1px;
+}
+
+/* Reproduce "md-main__inner" width and margins */
+.oxla-section {
+  width: 100%;
+}
+.oxla-section.black {
+  background: var(--md-primary-fg-color);
+  color: #fff;
+}
+.oxla-section-inner {
+  margin: 0 auto;
+  padding: 3rem 0;
+  max-width: 61rem;
+}
+.oxla-section:before {
+  content: "";
+  display: block;
+  height: 1px;
+}
+.oxla-section h2 {
+  margin: 3rem 0 0;
+}
+.oxla-section h2:first-of-type {
+  margin: 0;
+}
+.oxla-section h2+p {
+  margin: 1rem 0 2rem;
+}
+
+/* Hero banner */
+.oxla-banner {
+  margin: 2rem 0.8rem;
+}
+.oxla-banner-left {
+  display:flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 35rem;
+}
+.oxla-banner .oxla-title {
+  color: #fff;
+  font-weight: bold;
+  font-size: 2rem;
+  margin: 0;
+}
+.oxla-banner .oxla-subtitle {
+  color: #fff;
+  font-size: 0.9rem;
+  margin: 0;
+}
+.oxla-buttons {
+  margin: 0;
+}
+a.oxla-button {
+  padding: 0px 18px;
+  border-radius: 3px;
+  font-weight: bold;
+  font-size: .8rem;
+  border: 2px solid #fff;
+  margin-right: 16px;
+  display: inline-flex;
+  height: 40px;
+  align-items: center;
+  color:#fff;
+}
+a.oxla-button .material-icon {
+  font-family: "Material Icons";
+  padding-left: .5rem;
+}
+a.oxla-button:hover {
+  border-color: var(--md-accent-fg-color);
+  color: var(--md-accent-fg-color);
+}
+
+/* Features grid */
+.oxla-features,
+.oxla-community {
+  margin: 0 0.8rem;
+}
+.md-main .oxla-features ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  list-style-type: none;
+  margin: 0;
+}
+.md-main .oxla-features ul li {
+  flex-basis: 40%;
+  flex-grow: 1;
+  position: relative;
+  margin: 0;
+  padding: 10px 0 0 80px;
+}
+.oxla-features li strong:first-of-type {
+  display: block;
+  margin-bottom: 20px;
+  color: #555;
+  font-size: 1rem;
+}
+.oxla-features .material-icon {
+  font-family: "Material Icons";
+  color: #555;
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  font-size: 60px;
+  line-height: 60px;
+}
+
+/* Community grid */
+.md-main .oxla-community ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem 5%;
+  list-style-type: none;
+  margin: 2rem 0;
+}
+.md-main .oxla-community ul li {
+  flex-basis: 15%;
+  flex-grow: 1;
+  margin: 0;
+  padding: 1rem; /* remove for images */
+  border: 2px solid #fff; /* remove for images */
+  color:#fff;
+}
+
+@media screen and (max-width: 720px) {
+  .md-header__source {
+    width: auto;
+    margin-right:10px;
+  }
+  .md-source__repository.md-source__repository--active {
+    display: none;
+  }
+  .oxla-banner,
+  .md-main .oxla-features ul {
+    flex-direction: column;
+  }
+  .md-main .oxla-community ul {
+    gap: 2rem;
+  }
+  .md-main .oxla-community ul li {
+    flex-basis: 40%;
+  }
+}
