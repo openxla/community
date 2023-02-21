@@ -12,11 +12,11 @@ subtitle: |
   in ML software and hardware.
 buttons:
   - text: StableHLO
-    href: https://scottamain.github.io/stablehlo/
+    href: https://github.com/openxla/stablehlo
   - text: XLA Compiler
-    href: https://scottamain.github.io/xla/
+    href: https://github.com/openxla/xla
   - text: IREE
-    href: https://scottamain.github.io/iree/
+    href: https://github.com/iree-org/iree
 ---
 
 <section class="oxla-section" markdown>
