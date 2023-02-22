@@ -6,7 +6,7 @@ hide:
 
 title: OpenXLA project
 subtitle: |
-  An open ecosystem of portable and extensible ML infrastructure
+  An open ecosystem of portable and extensible machine learning infrastructure
   projects that simplify ML development by defragmenting the tools
   between frontend frameworks and hardware backends. Built by industry leaders
   in ML software and hardware.
@@ -16,7 +16,7 @@ buttons:
   - text: XLA Compiler
     href: https://github.com/openxla/xla
   - text: IREE
-    href: https://github.com/iree-org/iree
+    href: https://github.com/openxla/iree
 ---
 
 <section class="oxla-section" markdown>

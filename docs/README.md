@@ -33,11 +33,16 @@ It's easy to preview the rendered docs locally:
 
 That's it. The web pages automatically reload while you edit the markdown.
 
-When you want to publish the docs to GitHub Pages, use this command:
+To stage the site, run the following command, replacing `<your remote>` with
+the name of your remote repository:
 
 ```bash
-mkdocs gh-deploy --force
+mkdocs gh-deploy --remote-name <your remote>
 ```
 
-Read more about
-[publishing with mkdocs](https://squidfunk.github.io/mkdocs-material/publishing-your-site/).
+This force pushes to `gh-pages` on `<your remote>`.
+
+To learn more about publishing with mkdocs, see the following resources:
+
+* [Deploying your docs](https://www.mkdocs.org/user-guide/deploying-your-docs/)
+* [Publishing your site](https://squidfunk.github.io/mkdocs-material/publishing-your-site/)
