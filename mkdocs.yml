@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
+
+site_name: OpenXLA Project
+repo_url: https://github.com/openxla
+repo_name: github.com/openxla
+edit_uri: ""
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/openxla
+      name: OpenXLA on GitHub
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/PeWUTaecrA
+      name: OpenXLA Discord
+    - icon: fontawesome/solid/users
+      link: https://github.com/openxla/community#welcome-to-the-openxla-community
+      name: OpenXLA community info
+
+theme:
+  name: material
+  logo: website/assets/openxla-logo-white.svg
+  logo_alt: OpenXLA Project
+  favicon: website/assets/favicon.ico
+  icon:
+    repo: fontawesome/brands/github
+  font:
+    text: Noto
+    code: Noto Sans Mono
+  custom_dir: docs/website/overrides
+
+extra_css:
+  - website/stylesheets/openxla.css
+
+markdown_extensions:
+  - attr_list               # Add attributes to elements with {} notation
+  - md_in_html              # Allow MD within HTML tags
+  - pymdownx.highlight      # Syntax highlighting for code blocks
+  - pymdownx.inlinehilite   # And inline code (just in case): `#!python range()`
+  - pymdownx.superfences    # Nesting code fences and custom fence formats
+  - pymdownx.snippets:      # Include files/snippets: --8<-- 'README.md'
+      check_paths: True     #   and fail the build if file not found
+
+plugins: [] # Empty plugins list merely to disable search
