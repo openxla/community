@@ -11,17 +11,29 @@ subtitle: |
   between frontend frameworks and hardware backends. Built by industry leaders
   in ML software and hardware.
 buttons:
-  - text: StableHLO
-    href: https://github.com/openxla/stablehlo
-  - text: XLA Compiler
-    href: https://github.com/openxla/xla
   - text: IREE
     href: https://github.com/openxla/iree
+  - text: StableHLO
+    href: https://github.com/openxla/stablehlo
+  - text: XLA
+    href: https://github.com/openxla/xla
 ---
 
 <section class="oxla-section" markdown>
 <div class="oxla-section-inner" markdown>
 <div class="oxla-features" markdown>
+
+## IREE
+
+A next-generation compiler technology focused on low-overhead, latency-sensitive ML compilation and serving.
+
++ <span class="material-icon">extension</span>
+  **Modular**
+Provides a reusable and extensible architecture, built from the ground up in MLIR.
+
++ <span class="material-icon">open_with</span>
+  **Scalable**
+  Scales up to meet the needs of data centers and down to meet the constraints of mobile and embedded systems.
 
 ## StableHLO
 
@@ -38,7 +50,7 @@ different ML frameworks and compilers.
   StableHLO programs can be serialized into MLIR bytecode that provides
   long-term stability and backward-compatibility guarantees.
 
-## XLA Compiler
+## XLA
 
 An ML compiler that optimizes models for high-performance execution across
 hardware platforms including GPUs, CPUs, and ML accelerators.
@@ -58,18 +70,6 @@ hardware platforms including GPUs, CPUs, and ML accelerators.
 + <span class="material-icon">home_repair_service</span>
   **Simplifies your tools**
   Eliminate the complexity of managing diverse domain-specific compilers. OpenXLA leverages the power of MLIR to bring the best capabilities into a single compiler toolchain.
-
-## IREE
-
-A next-generation compiler technology focused on low-overhead, latency-sensitive ML compilation and serving.
-
-+ <span class="material-icon">extension</span>
-  **Modular**
-Provides a reusable and extensible architecture, built from the ground up in MLIR.
-
-+ <span class="material-icon">open_with</span>
-  **Scalable**
-  Scales up to meet the needs of datacenters and down to meet the constraints of mobile and embedded systems.
 
 </div>
 </div>
