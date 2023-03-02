@@ -10,10 +10,11 @@ OpenXLA is a community-driven, open source ML compiler ecosystem, using the best
 
 ## Other Resources
 
-* [Community Calendar](https://calendar.google.com/calendar/u/0/embed?src=c_6e3fee8576a7e330003a3130f2c89726fe487f4b3f555a12edf8a2c49005f69b@group.calendar.google.com&ctz=America/Los_Angeles): Add to your calendar to subscribe to all community meetings & events. 
-* [Discord](https://discord.gg/PeWUTaecrA): Synchronous discussions. 
-* [Google Drive Folder](https://drive.google.com/drive/folders/1617UbkYMZd-3PZB6Mx1AQe1xgeSQkP47?usp=sharing): Public files shared by project maintainers; viewable without a Google login. 
+* [Community Calendar](https://calendar.google.com/calendar/u/0/embed?src=c_6e3fee8576a7e330003a3130f2c89726fe487f4b3f555a12edf8a2c49005f69b@group.calendar.google.com&ctz=America/Los_Angeles) - Add to your calendar to subscribe to all community meetings & events. 
+* [Discord](https://discord.gg/PeWUTaecrA) - Synchronous discussions. 
+* [Google Drive Folder](https://drive.google.com/drive/folders/1617UbkYMZd-3PZB6Mx1AQe1xgeSQkP47?usp=sharing) - Public files shared by project maintainers; viewable without a Google login. 
 * Community proposals TBA
+* [OpenXLA Logos](https://drive.google.com/drive/folders/1Xg5Eiu4-c_tOeI0G1MKNlksXS5fZNphO?usp=share_link) - For guidance on use of logos or other brand assets, please contact openxla-brand at openxla dot org. 
 
 ## Repositories
 
