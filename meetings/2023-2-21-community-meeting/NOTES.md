@@ -1,4 +1,4 @@
-**Notes**
+**Notes** ([Recording](https://youtu.be/6x5NSDg3VEI) | [Slides](https://docs.google.com/presentation/d/1U6ZrfeOMVivSz-wzbfQciAVGTgxULKexoA7UWRbsLDA/))
 - Eric Kunze (ARM): 
   - **Introduction:** This is meant to be an introduction to the TOSA RFC for feedback from the community. TOSA provides whole tensor operations commonly employed by Deep Neural Networks. Implementable across multiple hardware accelerators. Check out the RFC to provide feedback.
   - **Background:** An overview of Quantization. A topic for discussion is fully quantized networks. The goal being to deploy a program that is as low power as possible. In these networks all operations are integer. Reproducibility across multiple implementations is not possible with floating point.
