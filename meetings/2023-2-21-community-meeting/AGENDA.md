@@ -1,4 +1,4 @@
-Date: 2023-2-21 Time: 8AM - 9AM PST (4PM - 5PM UTC) Location: [Zoom](https://us02web.zoom.us/j/87557882524?pwd=QUJZQlZub0tRTk1CbCt4eFYzZ0lJUT09)
+Date: 2023-2-21 Time: 8AM - 9AM PST (4PM - 5PM UTC) Location: [Zoom](https://us02web.zoom.us/j/87557882524?pwd=QUJZQlZub0tRTk1CbCt4eFYzZ0lJUT09) | [Recording](https://youtu.be/6x5NSDg3VEI)
 
 [10 min] Welcomes & housekeeping
 
