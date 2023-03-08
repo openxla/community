@@ -20,8 +20,8 @@ sign a new one.
 
 ### Review our Community Guidelines
 
-This project follows
-[Google's Open Source Community Guidelines](https://opensource.google/conduct/).
+This project follows the
+[TensorFlow Code of Conduct](https://github.com/tensorflow/tensorflow/blob/master/CODE_OF_CONDUCT.md).
 
 ## Contribution process
 
