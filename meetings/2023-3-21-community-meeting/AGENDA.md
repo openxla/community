@@ -1,5 +1,7 @@
 # OpenXLA Community Meeting Agenda
 
+**[[Recording](https://youtu.be/WsEB0nVMEKY) | [Slides](https://docs.google.com/presentation/d/1BSk6XCkaFIP8U_US9ahxNk_k6eGNYy035g-9rgBHqRk/edit?usp=sharing)]**
+
 **Date:** 2023-3-21 
 
 **Time:** 8AM - 9AM PDT (3PM - 4PM UTC) 
