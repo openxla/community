@@ -1,6 +1,6 @@
 # SIG OpenXLA Meeting Minutes 09/20 8AM PT
 
-Please see the [slide deck](https://github.com/openxla/community/blob/main/meetings/20220920-community-meeting/%5BPublic%5D%20SIG%20OpenXLA%20Meeting%202022.9.20.pdf) for in-depth content. XLA Runtime Video available on [Youtube](https://www.youtube.com/watch?v=ZGkzlapWUzU)
+Please see the [slide deck](https://github.com/openxla/community/blob/main/meetings/2022-09-20-community-meeting/%5BPublic%5D%20SIG%20OpenXLA%20Meeting%202022-09-20.pdf) for in-depth content. XLA Runtime Video available on [Youtube](https://www.youtube.com/watch?v=ZGkzlapWUzU)
 
 # Notes
 
@@ -19,7 +19,7 @@ Please see the [slide deck](https://github.com/openxla/community/blob/main/meeti
  * Integration into MLIR-HLO: [StableHLO now ships as part of MLIR-HLO](https://github.com/tensorflow/mlir-hlo/tree/master/stablehlo) to simplify experiments/adoption for existing MHLO users.
  * Overall, StableHLO is ready to supersede MHLO as a compiler interface. It ships in the same repo, has the same ops but additionally comes with compatibility guarantees.
  * [Compatibility RFC](https://github.com/openxla/stablehlo/pull/115): 6 months backward compatibility, 3 weeks forward compatibility, lots of details of how this will work. Let us know what you think!
- * Next steps: 
+ * Next steps:
    * 1) bootstrapping governance/RFC process
    * 2) adoption by *HLO producers: JAX, PyTorch/XLA, TensorFlow\
    * 3) conversations with ONNX-MLIR and Torch-MLIR
@@ -28,7 +28,7 @@ Please see the [slide deck](https://github.com/openxla/community/blob/main/meeti
 ### StableHLO Q&A
 
 **Are the ONNX and Torch requests for feature publicly available?**
- * ONNX-MLIR discussion is on [GitHub](https://github.com/tensorflow/mlir-hlo/issues/44). 
+ * ONNX-MLIR discussion is on [GitHub](https://github.com/tensorflow/mlir-hlo/issues/44).
  * PyTorch/XLA discussion is currently internal, we'll be posting details [on GitHub](https://github.com/pytorch/xla) soon.
  * Torch-MLIR discussion is in the #torch-mlir channel on LLVM discord.
 
@@ -45,7 +45,7 @@ Please see the [slide deck](https://github.com/openxla/community/blob/main/meeti
  * MHLO is currently a superset of HLO (supports the same features + unbounded dynamism + quantization), in the future we're planning to achieve MHLO/HLO parity.
  * Therefore, if the MHLO => HLO => ... workflow is working for you today, it's going to work with StableHLO as well.
 
-## Eugene Zhulenev provides a deep dive on XLA Runtime (see slide deck for in-depth content): 
+## Eugene Zhulenev provides a deep dive on XLA Runtime (see slide deck for in-depth content):
  * What did XLA use for a runtime before XLA Runtime?**
    * XLA:CPU compiles to a native X86 function pointer
    * XLA:GPU compiles to a ThunkSequence which is interpreted sequentially
@@ -82,15 +82,15 @@ Probably will be explicit initially, because experience with TF shows that autom
 
 **Is there a persistent format for storing xla executable and loading and running them later?**
 
-Answered above. 
+Answered above.
 
 **What about windows? and in the future do you have plans for heterogenous host/accelerator configs?**
 
 Windows is a supported platform, and everything should work. We rely on LLVM ORC and it’s well tested on Windows.
 
-**Thoughts on Arm CPU support?** 
+**Thoughts on Arm CPU support?**
 
-Yes we plan to support ARM, if there is a compiler, and LLVM ORC AFAIK supports ARM. 
+Yes we plan to support ARM, if there is a compiler, and LLVM ORC AFAIK supports ARM.
 
 ## Next Steps
 
