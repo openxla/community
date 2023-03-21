@@ -1,7 +1,7 @@
 # SIG OpenXLA Community Meeting
 ## Meeting Info
 
-Date/time: August 9, 2022, 9-10AM PDT
+Date/time: 2022-08-09 9-10AM PDT
 
 Host: Thea Lamkin (Google)
 
@@ -9,7 +9,7 @@ Scribe: James Rubin (Google)
 
 ## Notes
 
-* [Thea Lamkin] kicks off the first Public SIG OpenXLA meeting. Thanks everyone involved for making this possible. 
+* [Thea Lamkin] kicks off the first Public SIG OpenXLA meeting. Thanks everyone involved for making this possible.
   * Housekeeping: Overview of OpenXLA meeting cadence, structure, and tools
     * Rotating host and scribe: host will have expectation of agenda and managing meeting minutes
     * What meetings should include: Roadmaps
@@ -24,7 +24,7 @@ Scribe: James Rubin (Google)
     * XLA
     * TensorFlow
     * Tensor Standard Libraries (TSL)
-  * Code contents of the repositories including: 
+  * Code contents of the repositories including:
     * Stream Executor and JitRT in XLA
     * Utilities and profiler service in TSL
     * XProf, TensorFlow-to-XLA bridge in TensorFlow
@@ -55,9 +55,9 @@ Scribe: James Rubin (Google)
     * **Stephan**: “This is not a new compiler. We are taking XLA as it is and evolving it. The changes are mainly to the development model.”
   * **Rich**: “How should we interpret the use of GPU in the roadmap speaking as a non-GPU platform? There are accelerators like Trainium that are not classically GPU or CPU-based.”
     * **Stephan**: Skips to the Hardware & Framework Optionality slide. “I naturally speak about CPU/GPU, but we are aware that this is not the entire ecosystem. Hardware optionality: (1) We want to unlock device optionality. How do we do this? One thing we want to do is improve the layering of XLA to get better reuse of components so you don’t have to build an entirely new compiler to support your hardware. We are unifying the runtime for CPU/GPU so that it is not strictly a CPU or GPU runtime. We want to enable more floating point formats, which is something different hardware platforms care about. We’re also developing feature parity between MHLO and HLO. Enable different device runtimes that different parties are interested in. Framework optionality: (1) Interoperability between compiled and non-compiler code.”
-  * **Vinod**: “OpenXLA will support StableHLO?” 
+  * **Vinod**: “OpenXLA will support StableHLO?”
     * **Stephan**: StableHLO is an input dialect. OpenXLA will accept StableHLO.
-  * ** Stephan**: Goes back to the “Usability” slide. “OSS developer productivity is a priority for us.” 
+  * ** Stephan**: Goes back to the “Usability” slide. “OSS developer productivity is a priority for us.”
     * Describes Google efforts around processes, tooling, metrics, and documentation including: (1) “Metrics dashboard v1.0 will give us visibility into how contributions have an impact on compiler, workload, and hardware performance.”
     * Moves on to 2024 and beyond slide and discusses long term goals and initiatives for XLA including: (1) AOT machine learning compiler for mobile (2) device-specific optimizations via extension mechanisms and more
 * **Eugene Burmako** introduces StableHLO presentation.
