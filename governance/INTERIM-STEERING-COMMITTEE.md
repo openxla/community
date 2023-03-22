@@ -28,50 +28,14 @@ The Interim Steering Committee meets regularly, and makes consensus-based decisi
 
 Committee members are Googlers who contribute to and maintain OpenXLA project repos.
 
-<table>
-  <tr>
-   <td><strong>Member </strong>
-   </td>
-   <td><strong>Profile</strong>
-   </td>
-  </tr>
-  <tr>
-   <td>Eugene Burmako
-   </td>
-   <td>burmako
-   </td>
-  </tr>
-  <tr>
-   <td>Geoffrey Martin-Noble
-   </td>
-   <td>gmngeoffrey
-   </td>
-  </tr>
-  <tr>
-   <td>Jacques Pienaar
-   </td>
-   <td>jpienaar
-   </td>
-  </tr>
-  <tr>
-   <td>Stella Laurenzo
-   </td>
-   <td>stellaraccident
-   </td>
-  </tr>
-  <tr>
-   <td>Stephan Herhut
-   </td>
-   <td>sherhut
-   </td>
-  </tr>
-  <tr>
-   <td>Thea Lamkin
-   </td>
-   <td>theadactyl
-   </td>
-  </tr>
-</table>
+| Member                | Profile         |
+|-----------------------|-----------------|
+| Eugene Burmako        | burmako         |
+| Geoffrey Martin-Noble | gmngeoffrey     |
+| Jacques Pienaar       | jpienaar        |
+| Stella Laurenzo       | stellaraccident |
+| Stephan Herhut        | sherhut         |
+| Thea Lamkin           | theadactyl      |
 
 
 ## Getting in touch
