@@ -44,5 +44,5 @@ There are two ways to raise issues to the Interim Steering Committee:
 
 
 
-1. Emailing the steering committee at [openxla-interim-steering@openxla.org](mailto:openxla-interim-steering@openxla.org). This is a private discussion list to which all members of the committee have access.
-2. Open an issue in the [openxla/community](https://github.com/openxla/community/tree/main/meetings) repo and indicate that you would like attention from the steering committee. 
+1. Emailing the steering committee at openxla-interim-steering@openxla.org. This is a private discussion list to which all members of the committee have access.
+2. Open an issue in the [openxla/community](https://github.com/openxla/community/) repo and indicate that you would like attention from the steering committee. 
