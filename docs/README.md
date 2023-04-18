@@ -46,3 +46,10 @@ To learn more about publishing with mkdocs, see the following resources:
 
 * [Deploying your docs](https://www.mkdocs.org/user-guide/deploying-your-docs/)
 * [Publishing your site](https://squidfunk.github.io/mkdocs-material/publishing-your-site/)
+
+## Analytics
+
+The website supports Google Analytics 4. To learn more, see
+[Setting up site analytics](https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-analytics/)
+and
+[Ensuring data privacy](https://squidfunk.github.io/mkdocs-material/setup/ensuring-data-privacy/).

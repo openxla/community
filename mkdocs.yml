@@ -15,6 +15,9 @@ extra:
     - icon: fontawesome/solid/users
       link: https://github.com/openxla/community#welcome-to-the-openxla-community
       name: OpenXLA community info
+  analytics:
+    provider: google
+    property: G-Z67BRKDG1B
 
 theme:
   name: material
