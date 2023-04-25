@@ -18,6 +18,17 @@ extra:
   analytics:
     provider: google
     property: G-Z67BRKDG1B
+  consent:
+    title: Cookie consent
+    description: >-
+      OpenXLA uses cookies from Google to deliver and enhance the quality of its
+      services and to analyze traffic. Material for MkDocs requires consent to
+      fetch statistics about OpenXLA on GitHub.
+    actions:
+      - accept
+      - manage
+    cookies:
+      analytics: Google Analytics
 
 theme:
   name: material
@@ -44,3 +55,6 @@ markdown_extensions:
       check_paths: True     #   and fail the build if file not found
 
 plugins: [] # Empty plugins list merely to disable search
+copyright: >
+  Copyright &copy; 2023 OpenXLA.
+  <a href="#__consent">Change cookie settings</a>.
