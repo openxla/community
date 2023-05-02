@@ -18,7 +18,7 @@ OpenXLA is a community-driven, open source ML compiler ecosystem, using the best
 
 * [StableHLO](https://github.com/openxla/stablehlo): Portability layer between ML frameworks and ML compilers.
 * [XLA](https://github.com/openxla/xla): Main XLA codebase (being migrated from tensorflow/compiler/xla).
-* [IREE](https://github.com/iree-org/iree): MLIR-based end-to-end compiler and runtime for ML models (being migrated from [iree-org](https://github.com/iree-org)). Note that IREE has its own comms channels (see its README).
+* [IREE](https://github.com/openxla/iree): MLIR-based end-to-end compiler and runtime for ML models. Note that IREE has its own comms channels (see its README).
 
 ## Code of Conduct
 Until an OpenXLA-specific Code of Conduct is in place, all community spaces for OpenXLA are subject to the [TensorFlow Code of Conduct](https://github.com/tensorflow/community/blob/master/CODE_OF_CONDUCT.md).
