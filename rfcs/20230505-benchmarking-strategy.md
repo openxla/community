@@ -280,11 +280,11 @@ We will build new benchmarking infra and tooling by re-using and extending the e
 
 To allow us to move forward quickly, and replace existing infrastructure step by step, we aim at clearly separating benchmark execution, storage and analytics with minimal, clearly defined boundaries between them.
 
-![image](20230505-benchmarking-strategy/execution-storage-analytics.png "Separation of execution, storage and analytics")
+![Separation of execution, storage and analytics](20230505-benchmarking-strategy/execution-storage-analytics.png)
 
 The new infrastructure components, named **OOBI** **(OpenXLA OSS Benchmarking Infrastructure)**, will be part of the OpenXLA repositories, along with the models selected as a benchmarking set. We will rely on GitHub Actions and GCP Runners to run benchmarks. Results are stored in JSON files in a public GCS bucket with additional artifacts alongside. A Cloud Function will then import the JSON file contents into BigQuery for analytics, and we will use [Looker Studio](https://cloud.google.com/looker-studio) - GCP’s reporting and dashboarding solution - for visualization. This approach enables us to create powerful dashboards from multiple sources with potentially different JSON formats, while also empowering the community to run their own analytics solution on the raw data.
 
-![image](20230505-benchmarking-strategy/analytics-overview.png "Overview of the dashboarding pipeline")
+![Overview of the dashboarding pipeline](20230505-benchmarking-strategy/analytics-overview.png)
 
 ### Next Steps
 
