@@ -23,7 +23,6 @@ Target audience (“user personas”), in order of importance:
 1. **Compiler Engineers**. OpenXLA contributors that contribute to the OpenXLA codebase via PRs in GitHub.
 2. **Potential Adopters**. Partners not yet using or contributing to OpenXLA, but we would want them to do so - e.g. vendors of not-yet supported accelerators.
 
-
 ### List of Use Cases
 
 We foresee the following use cases for benchmarking efforts:
@@ -42,10 +41,7 @@ As a **Compiler Engineer** I want to…
 
 As a **potential adopter**, I want to…
 
-
-
 *   **[P0]** compare the existing compiler stacks to other compilers and across different framework/compiler combinations so I can judge where to invest my efforts.
-
 
 ## Detailed Requirements
 
@@ -98,7 +94,6 @@ We will focus on high-level “black box” metrics that do not require compiler
    </td>
   </tr>
 </table>
-
 
 It is expected that the benchmarks themselves will take care of establishing comparability for metrics. It is up to the metric definition to specify e.g. units, and no conversion will be provided by the infrastructure. Training benchmarks will include framework overhead. For inference benchmarks, benchmarks could run with or without framework overhead, but we must ensure comparability in benchmark selection (e.g. we should not compare benchmarks with and without overhead).
 
