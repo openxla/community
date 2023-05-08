@@ -36,8 +36,8 @@ IREE:CPU/CUDA to analyze E2E latency and memory. It will show comparisons over
 time on an initial set of agreed-upon models (as listed under “Detailed
 Requirements”), which will also define the frameworks to support. Dashboards
 will update automatically at least once a week, ideally nightly, using the
-latest head or nightly release (whereas 3P compilers will use a stable
-baseline).
+latest head or nightly release (whereas 3P compilers and frameworks may need to
+rely on official releases, depending on availability and release strategy).
 
 Initial focus requirements are listed as **P0** below. **P1** requirements will
 be implemented in the next stages, but will be considered during the design.
@@ -99,7 +99,8 @@ As a **Compiler Engineer** I want to…
   Diff”).
 - **\[P1\]** be able to add new, selected benchmarks for comparison, post- and
   pre-submit regression to cover a set of greater variety and include specific
-  models which are important to my use-case.
+  models which are important to my use-case. These models will then be made part
+  of the automated runs, with their results available through to the community.
 
 As a **potential adopter**, I want to…
 
@@ -133,6 +134,14 @@ We want to collect and visualize metrics for:
 We will focus on high-level “black box” metrics that do not require compiler
 instrumentation and can thus be collected for 3rd party compilers as well. These
 can be implemented on either a framework- or OS-level.
+
+The design will support "compiler-level benchmarks" that take as input
+StableHLO, and "framework-level benchmarks", which take as input programs
+supported by that framework. The latter will then also be able to expose
+performance issues that arise in the interaction of and integration layers of
+framework / bridge / plug-in / compilers. We aim at good coverage around both in
+the long run, but we must ensure comparability in benchmark selection (e.g. we
+should not compare framework- and compiler-level benchmarks directly).
 
 <table>
   <tr>
@@ -170,10 +179,8 @@ can be implemented on either a framework- or OS-level.
 It is expected that the benchmarks themselves will take care of establishing
 comparability for metrics. It is up to the metric definition to specify e.g.
 units, and no conversion will be provided by the infrastructure. Training
-benchmarks will include framework overhead. For inference benchmarks, benchmarks
-could run with or without framework overhead, but we must ensure comparability
-in benchmark selection (e.g. we should not compare benchmarks with and without
-overhead).
+benchmarks will be framework-level, whereas inference benchmarks can be either
+framework- or compiler-level.
 
 It is currently not in scope to explicitly measure framework overhead, but this
 could be added later if we include the same benchmarks with and without
