@@ -3,22 +3,24 @@
 ## Context
 
 This RFC outlines the requirements and strategy to provide benchmarking
-infrastructure and metrics dashboards for the OSS community. It provides a
+infrastructure and metrics dashboards for OpenXLA. It provides a
 high-level overview on the components and will be followed up by more detailed
 technical design RFCs.
 
+Disclaimer: This work is currently sponsored by Google, and initial priorities
+will thus reflect Google's priorities. Throughout this document, "we" refers
+to the current working group at Google dedicated to this project.
+
 ### Summary
 
-1. For all compilers under the OpenXLA umbrella - _XLA:GPU, XLA:CPU, IREE:GPU
-   (CUDA backend) and IREE:CPU_ (x86 llvm-cpu backend) - we want to provide an
-   **infrastructure** to run benchmarks in an OSS-first way that puts 1P
-   (Google) and 3P engineers on equal footing. 3P engineers must be able to
-   re-run and reproduce the results of a benchmark in the exact environment
-   without 1P support.
-1. We want to provide **interactive** **dashboards** accessible to the OSS
+1. For all compilers under the OpenXLA umbrella - _XLA:GPU, XLA:CPU, IREE:CUDA and IREE:CPU_ (x86 llvm-cpu backend) - we want to provide an
+   **infrastructure** to run automated benchmarks regularly. OpenXLA engineers 
+   must be able to re-run and reproduce the results of a benchmark in the exact 
+   environment.
+1. We want to provide **interactive** **dashboards** accessible to the 
    community to evaluate _Progression_ and _Competition_, including comparisons
    with frameworks and compilers outside of the OpenXLA umbrella. We also
-   provide _Regression_ dashboards for _IREE:CPU and IREE:GPU_ on a common infra
+   provide _Regression_ dashboards for _IREE on a common infra
    stack. Regression dashboards for _XLA:CPU and XLA:GPU_ are not the primary
    focus as of now and may be considered in the future.
 1. We focus on **high-level metrics** such as wall-time and max memory
@@ -29,7 +31,7 @@ technical design RFCs.
    but we defer the detailed requirements and design.
 
 Initial focus will be on Progression and Competition for XLA:CPU/GPU and
-IREE:CPU/GPU to analyze E2E latency and memory. It will show comparisons over
+IREE:CPU/CUDA to analyze E2E latency and memory. It will show comparisons over
 time on an initial set of agreed-upon models (as listed under “Detailed
 Requirements”), which will also define the frameworks to support. Dashboards
 will update automatically at least once a week, ideally nightly, using the
@@ -44,7 +46,7 @@ be implemented in the next stages, but will be considered during the design.
 
 ### Target Audience
 
-Target audience (“user personas”), in order of importance:
+Target audience (“user personas”) of the benchmarking infrastructure and dashboards, in order of importance:
 
 1. **Compiler Engineers**. OpenXLA contributors that contribute to the OpenXLA
    codebase via PRs in GitHub.
@@ -59,12 +61,12 @@ We foresee the following use cases for benchmarking efforts:
 As a **Compiler Engineer** I want to…
 
 - **\[P0\]** see the evolution of high-level performance metrics such as latency
-  and memory consumption for XLA:CPU/GPU and IREE:CPU/GPU over time
+  and memory consumption for XLA:CPU/GPU and IREE:CPU/CUDA over time
   (“Progression”). This allows me to judge the impact of my efforts, and make
   informed decisions about future engineering choices.
 - **\[P0\]** see comparisons of aforementioned metrics for a variety of
   compilers and frameworks including 3P over time (“Competition”). This way, I
-  can compare the performance of XLA:CPU/GPU and IREE:CPU/GPU with multiple
+  can compare the performance of XLA:CPU/GPU and IREE:CPU/CUDA with multiple
   baselines to evaluate competitiveness and success metrics for our compilers,
   and judge where to invest my efforts to make progress towards target metrics.
 - **\[P0\]** be able to reproduce the results of all benchmarks locally to work
@@ -85,7 +87,7 @@ As a **Compiler Engineer** I want to…
   need to filter across various dimensions (compilers, models, hardware,
   configurations, …) so I can focus on the data relevant for my use-case.
 - **\[P1\]** have analytics support in finding performance regressions
-  (“Regression”) for XLA:CPU/GPU and IREE:CPU/GPU, and be guided towards the
+  (“Regression”) for XLA:CPU/GPU and IREE, and be guided towards the
   single change that introduced a regression so I can fix it or roll it back.
   Regressions should be detected on a variety of hardware, models and
   configurations, but I will want a high-level summary of the results and not be
@@ -184,14 +186,14 @@ benchmarks) which are out of scope for now.
 Comparison benchmarks need to run regularly, e.g. daily or weekly. Relevant
 compilers and frameworks to compare:
 
-- **\[P0\]** IREE-GPU
-- **\[P0\]** IREE-CPU
-- **\[P0\]** XLA-GPU
-- **\[P0\]** XLA-CPU
-- **\[P1\]** TVM
-- **\[P1\]** PT-TorchInductor
+- **\[P0\]** IREE:CUDA
+- **\[P0\]** IREE:CPU
+- **\[P0\]** XLA:GPU
+- **\[P0\]** XLA:CPU
+- **\[P1\]** PT/TorchInductor
 - **\[P1\]** nvFuser
-- **\[P2\]** XLA-TPU
+- **\[P2\]** TVM
+- **\[P2\]** PT/XLA on Cloud TPU
 
 For a given model or workload, the framework used to compare compilers will
 depend on whether an implementation is available in that framework. We aim for
@@ -202,10 +204,11 @@ coverage across **Tensorflow, PyTorch and JAX**.
 Regression Dashboards will only be offered for Compilers developed under the
 OpenXLA umbrella:
 
-- **\[P1\]** IREE-GPU
-- **\[P1\]** IREE-CPU
-- **\[P2\]** XLA-GPU
-- **\[P2\]** XLA-CPU
+- **\[P1\]** IREE:CUDA
+- **\[P1\]** IREE:CPU
+- **\[P1\]** IREE:Vulkan
+- **\[P2\]** XLA:GPU
+- **\[P2\]** XLA:CPU
 
 Regression benchmarks need to be able to run for each PR to support culprit
 finding. Whether they actually run on each PR (post-submit) or find the actual
