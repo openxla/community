@@ -17,4 +17,4 @@ Meeting archives:
 * [2022-08-09: SIG OpenXLA Community Meeting](https://github.com/openxla/community/tree/main/meetings/2022-08-09-community-meeting)
 
 ## Ad Hoc Meetings
-To host an ad-hoc meeting or technical deep dive, email [openxla-discuss](https://groups.google.com/a/openxla.org/g/openxla-discuss) with your proposed time and topic. If there is enough interest, OpenXLA project members will assist in adding it to the [OpenXLA Community Calendar](https://calendar.google.com/calendar/u/0/embed?).
+To host an ad-hoc meeting or technical deep dive, email [openxla-discuss](https://groups.google.com/a/openxla.org/g/openxla-discuss) with your proposed time and topic. If there is enough interest, OpenXLA project members will assist in adding it to the [OpenXLA Community Calendar](https://calendar.google.com/calendar/u/0/embed?src=c_6e3fee8576a7e330003a3130f2c89726fe487f4b3f555a12edf8a2c49005f69b@group.calendar.google.com&ctz=America/Los_Angeles).
