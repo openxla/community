@@ -60,10 +60,12 @@ to run multiple OpenXLA and third-party compilers to gather the comparative
 results. It will run the common benchmark suite with each compiler and collect
 the comparable results.
 
-The current IREE benchmark framework already supports decoupling into
-compiler-agnostic and compiler-specific parts. The plan is to extract the code
-from the [IREE repository](https://github.com/openxla/iree) and reuse them in
-the new common benchmark suite.
+The current
+[IREE benchmark framework](https://github.com/openxla/iree/tree/main/build_tools/python/e2e_test_framework)
+already supports decoupling into compiler-agnostic and compiler-specific parts.
+The plan is to extract the code from the
+[IREE repository](https://github.com/openxla/iree) and reuse them in the new
+common benchmark suite.
 
 The figure below shows the relationship between components. This RFC covers the
 contents of "OpenXLA Benchmark Repository" and the integration into compiler
