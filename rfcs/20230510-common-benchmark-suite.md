@@ -2,8 +2,8 @@
 
 ## Objective
 
-*   Create a **benchmark suite** to compare the performance of 1P compilers
-    under OpenXLA and 3P compilers.
+*   Create a **benchmark suite** to compare the performance of OpenXLA compilers
+    and third-party compilers.
 *   Create a new repository **“openxla-benchmark”** under OpenXLA organization
     to host the benchmark suite along with the related tools and the benchmark
     workflow.
@@ -15,28 +15,28 @@
 This is a subsequent RFC of
 [OpenXLA Benchmarking Strategy](https://github.com/openxla/community/pull/75)
 outlines a benchmark suite for comparative and regression benchmarking for the
-1P and 3P compilers that the OpenXLA community is interested in. It is part of
-the **OOBI** (OpenXLA OSS Benchmarking Infrastructure).
+OpenXLA and third-party compilers that the OpenXLA community is interested in.
+It is part of the **OOBI** (OpenXLA OSS Benchmarking Infrastructure).
 
 ## Motivation
 
 The OpenXLA community wants to regularly (e.g. daily, weekly) compare and track
-the performance of 1P and 3P compilers for assisting compiler development.
-Therefore, it needs a benchmark suite that includes the models and devices the
-OpenXLA community has prioritized and adjusted accordingly based on the shifts
-in focus.
+the performance of OpenXLA and third-party compilers for assisting compiler
+development. Therefore, it needs a benchmark suite that includes the models and
+devices the OpenXLA community has prioritized and adjusted accordingly based on
+the shifts in focus.
 
-In addition to the comparative benchmarking, multiple compiler projects in
+In addition to the comparative benchmarking, multiple compiler projects under
 OpenXLA (e.g. IREE, XLA, and openxla-nvgpu) want to run the same benchmark suite
-as regression benchmarks to track the performance on those focused targets and
-potentially test with experimental flags. Therefore the benchmark suite should
-be reusable and customizable in their projects.
+as regression benchmarks to track the performance on the focused targets and
+potentially test with experimental flags. So the benchmark suite should be
+reusable and customizable in their projects.
 
 ## Use Cases
 
 *   Running in a comparative benchmark workflow regularly (e.g. daily, weekly,
-    every release) to generate reports and show relative performance between 1P
-    and 3P compilers.
+    every release) to generate reports and show relative performance between
+    OpenXLA and third-party compilers.
 *   Being integrated into the compiler projects to run on presubmit and
     postsubmit for the regression benchmarking.
 
@@ -47,26 +47,30 @@ This RFC proposes to create a common benchmark suite that is
 workflows and regression benchmarking resident in each compiler project.
 
 The common benchmark suite only includes the high-level definitions, such as the
-models and target devices to run. It allows compiler projects to extend the
-definitions to include compiler-specific details of how the models will be
-compiled and run on the devices. This makes it easier to build regression
-benchmarks within each compiler project while reducing boilerplate code by
-reusing the models and benchmark definitions. The compiler projects are also
-free to run a benchmark with different experimental configurations.
+models and target devices. It allows compiler projects to import and extend the
+definitions to include details of how to compile the models and run on the
+devices. This makes it easier to build regression benchmarks within each
+compiler project while reducing boilerplate code by reusing the models and
+benchmark definitions. Compiler projects are also free to run benchmarks with
+different experimental configurations. All compiler-specific extensions are
+implemented and maintained in each compiler project.
 
 The common benchmark suite will also be used in a comparative benchmark workflow
-to run multiple 1P and 3P compilers to gather the comparative results. It will
-run the common benchmark suites with each compiler and collect the comparable
-results.
+to run multiple OpenXLA and third-party compilers to gather the comparative
+results. It will run the common benchmark suite with each compiler and collect
+the comparable results.
 
 The current IREE benchmark framework already supports decoupling into
 compiler-agnostic and compiler-specific parts. The plan is to extract the code
 from the [IREE repository](https://github.com/openxla/iree) and reuse them in
 the new common benchmark suite.
 
-The figure below shows the relationship between components. See
+The figure below shows the relationship between components. This RFC covers the
+contents of "OpenXLA Benchmark Repository" and the integration into compiler
+repositories. See
 [OpenXLA Benchmarking Strategy](https://github.com/openxla/community/pull/75)
-for how OOBI stores results in the database and visualizes in the dashboard.
+for how OOBI stores benchmark results in the database and visualizes in the
+dashboard.
 
 ![Project structure](20230510-common-benchmark-suite/project-structure.png)
 
@@ -99,12 +103,12 @@ implementations through Python modules.
 #### Collections of Benchmark Definitions
 
 Several collections of benchmarks will also be defined in the common benchmark
-suite, mainly for the comparative benchmarking. The benchmark collections are
+suite, initially for the comparative benchmarking. The benchmark collections are
 subject to growth overtime. An initial suite has been defined in the **Models**
 section of
 [OpenXLA Benchmarking Strategy](https://github.com/openxla/community/pull/75).
 
-#### Example of Classes to Define Common Inference Benchmarks and Using with Compiler
+#### Example of Common Benchmark Definitions and Using with Compilers
 
 The details of definitions are still subject to change, but here are the
 examples to help explain the design.
@@ -114,11 +118,13 @@ In the common benchmark suite, the inference benchmarks are defined as:
 ```py
 ### In module `benchmark_framework`
 class Model:
+  """Model to benchmark."""
   name: str
   # For the exported model, it's the URL to fetch the model.
   # For the model implementation with framework, it's the file path to import
-  # the model module with `importlib.import_module`.
-  artifact_sources: Dict[ModelFormat, str]
+  # the Python model module with `importlib.import_module`. This prevents
+  # pulling in unnecessary dependencies from those modules.
+  source_artifacts: Dict[ModelFormat, str]
 
 class ModelTestData:
   """Input and expected output data."""
@@ -127,6 +133,7 @@ class ModelTestData:
   artifact_url: str
 
 class DeviceSpec:
+  """Device specification to run benchmarks."""
   name: str
   # E.g., GCP
   device_type: DeviceType
@@ -136,7 +143,7 @@ class DeviceSpec:
   device_architecture: str
 
 class InferenceBenchmark:
-  """Generic model inference benchmark."""
+  """Common inference benchmark."""
   # Unique id to identify the benchmark.
   benchmark_id: str
   model: Model
@@ -165,7 +172,7 @@ from openxla_benchmark import bert_benchmark
 RUN_HLO_MODULE_BINARY_PATH="/bazel-bin/tensorflow/run_hlo_module"
 
 def benchmark_xla_gpu(common_benchmark):
-  hlo_remote_path = common_benchmark.model.artifact_sources[
+  hlo_remote_path = common_benchmark.model.source_artifacts[
     ModelFormat.HLO_DUMP
   ]
   hlo_path = download_file(hlo_remote_path)
@@ -180,8 +187,8 @@ def benchmark_xla_gpu(common_benchmark):
 ```
 
 Here is another example with IREE. It extends the common benchmark suite with
-its own configurations and flags. The existing IREE benchmark framework can then
-compile and run benchmarks following the detailed configurations. Some
+IREE's own configurations and flags. The existing IREE benchmark framework can
+then compile and run benchmarks following the detailed configurations. Some
 implementation details are ommited.
 
 ```py
@@ -197,30 +204,30 @@ class IreeModuleGenerationConfig:
 
 class IreeInferenceBenchmark:
   """Describes an IREE inference benchmark."""
-  # Reference to the base generic benchmark.
-  base_benchmark: benchmark_framework.CommonInferenceBenchmark
+  # Reference to the base benchmark.
+  base_benchmark: benchmark_framework.InferenceBenchmark
   module_generation_config: IreeModuleGenerationConfig
   # IREE runtime driver.
   runtime_driver: str
   extra_runtime_flags: List[str] = []
 
-def get_module_generation_config(model, device) -> IreeModuleGenerationCOnfig:
-  """Build the compilation config for the model and target device."""
+def get_module_generation_config(model, device_spec) -> IreeModuleGenerationConfig:
+  """Build the compilation config for the model and target device spec."""
   ...
 
-def get_runtime_driver(device) -> str:
-  """Select the runtime driver based on the target device."""
+def get_runtime_driver(device_spec) -> str:
+  """Select the runtime driver based on the target device spec."""
   ...
 
 def derive_iree_benchmark(common_benchmark) -> IreeInferenceBenchmark:
-  """Derive IREE benchmark from common benchmark."""
+  """Derive IREE benchmark from the common benchmark."""
   # Fill out IREE compile and run configurations according to the model
-  # and target device of the `common_benchmark`.
+  # and target device spec of the `common_benchmark`.
   gen_config = get_module_generation_config(
     model=common_benchmark.model,
-    device=common_benchmark.target_device_spec)
+    device_spec=common_benchmark.target_device_spec)
   runtime_driver = get_runtime_driver(
-    device=common_benchmark.target_device_spec)
+    device_spec=common_benchmark.target_device_spec)
   return IreeInferenceBenchmark(
     base_benchmark=common_benchmark,
     module_generation_config=gen_config,
@@ -233,12 +240,12 @@ IREE_BERT_ON_A100 = derive_iree_benchmark(bert_benchmark.BERT_ON_A100)
 
 It’s worth noting that except for the special cases, compilers in general are
 expected to derive their compiler-specific configurations automatically from the
-common definitions based on the models and target devices.
+common definitions based on the models and target device specifications.
 
 ### Integration in Compiler Project
 
-For the compiler projects that want to use and extend the common benchmark suite
-in their repositories, they should only need to checkout the repository of the
+For the compiler projects that want to import and extend the common benchmark
+suite in their repositories, they only need to checkout the repository of the
 common benchmark suite as a submodule, add it to the Python module search path,
 and install the dependencies. The release can be set up if needed.
 
@@ -250,7 +257,7 @@ definitions and pin the package versions. It is not necessary to install it if
 you do not run those benchmarks.
 
 The class definitions of the common benchmark suite should be stable with rare
-breaking changes once they are mature. It is important to not introduce too much
+breaking changes once they are mature. It is important to not introduce extra
 overhead for compiler projects to update their integrated common benchmark
 suite.
 
@@ -262,8 +269,8 @@ The near-term plan is to enable regular comparative benchmarking and enable all
 OpenXLA compiler projects to start reusing the common benchmark suite to build
 their regression benchmarking.
 
-The repository “openxla-benchmark” will be created to host this benchmark suite.
-After that, the IREE team will start moving their Python-based IREE benchmark
+The repository “openxla-benchmark” will be created to host the common benchmark
+suite. After that, IREE team will start moving their Python-based IREE benchmark
 framework there and refactor it to become the common benchmark suite.
 
 The comparative benchmark workflow currently hosted in the IREE repository will
@@ -272,8 +279,8 @@ compilers (e.g. XLA compiler) will be added.
 
 To simplify the repository structure, the comparative benchmark workflow will
 live under the same new repository with the common benchmark suite. A proper
-directory structure should avoid the common benchmark suite from being polluted
-by the comparative benchmark workflow. For example:
+directory structure should prevent the common benchmark suite from being
+polluted by the comparative benchmark workflow. For example:
 
 ```
 openxla-benchmark repository
@@ -308,5 +315,5 @@ comparative benchmarking with multiple compilers and frameworks.
 
 SHARK highly integrates IREE and other compilers so it is not easy to reuse in
 the regression benchmarks without pulling in unnecessary dependencies. MLPerf
-doesn’t provide a common way to define models and it is ad-hoc to run different
+doesn’t provide a common way to define models. And it is ad-hoc to run different
 types of models, which makes it hard to add new benchmarks.
