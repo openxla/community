@@ -181,7 +181,8 @@ def benchmark_xla_gpu(common_benchmark):
 
 Here is another example with IREE. It extends the common benchmark suite with
 its own configurations and flags. The existing IREE benchmark framework can then
-compile and run benchmarks following the detailed configurations.
+compile and run benchmarks following the detailed configurations. Some
+implementation details are ommited.
 
 ```py
 from openxla_benchmark import benchmark_framework, bert_benchmark
@@ -202,6 +203,14 @@ class IreeInferenceBenchmark:
   # IREE runtime driver.
   runtime_driver: str
   extra_runtime_flags: List[str] = []
+
+def get_module_generation_config(model, device) -> IreeModuleGenerationCOnfig:
+  """Build the compilation config for the model and target device."""
+  ...
+
+def get_runtime_driver(device) -> str:
+  """Select the runtime driver based on the target device."""
+  ...
 
 def derive_iree_benchmark(common_benchmark) -> IreeInferenceBenchmark:
   """Derive IREE benchmark from common benchmark."""
