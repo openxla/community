@@ -68,16 +68,16 @@ As a **Compiler Engineer** I want to…
   informed decisions about future engineering choices.
 - **\[P0\]** see comparisons of aforementioned metrics for a variety of
   compilers and frameworks including 3P over time (“Competition”). This way, I
-  can compare the performance of XLA:CPU/GPU and IREE:CPU/CUDA with multiple
-  baselines to evaluate competitiveness and success metrics for our compilers,
+  can compare the performance of XLA:CPU/GPU, IREE:CPU/CUDA and various state-of-the-art competitors to evaluate competitiveness and success metrics for our compilers,
   and judge where to invest my efforts to make progress towards target metrics.
 - **\[P0\]** be able to reproduce the results of all benchmarks locally to work
   on improving performance. This includes easy reproducibility of the
   environment, ideally by means as simple as selecting an appropriate VM on a
   cloud service, or at least having all steps to set up a run on a custom device
   (such as a mobile device) clearly documented. We must ensure benchmarks are
-  run on a stack that is available to 3P users, and all artifacts and commands
-  required for execution are accessible.
+  run on a stack that is available to the community, and all artifacts and
+  commands required for execution are accessible. All artifacts generated during
+  the benchmarking runs also need to be available for download.
 - **\[P1\]** see aforementioned benchmark results over a wide variety of models
   so I can analyze how different types of models perform. This will maximize the
   meaningfulness of the gathered results, and expose each compiler’s strengths
@@ -199,7 +199,7 @@ compilers and frameworks to compare:
 - **\[P0\]** IREE:CPU
 - **\[P0\]** XLA:GPU
 - **\[P0\]** XLA:CPU
-- **\[P1\]** PT/TorchInductor
+- **\[P0\]** PT/TorchInductor
 - **\[P1\]** nvFuser
 - **\[P2\]** TVM
 - **\[P2\]** PT/XLA on Cloud TPU
@@ -280,6 +280,8 @@ with a fairly small, curated and representative list of models.
   <tr>
    <td style="background-color: #434343"><strong>Name</strong>
    </td>
+   <td style="background-color: #434343"><strong>Param Count</strong>
+   </td>
    <td style="background-color: #434343"><strong>Format</strong>
    </td>
    <td style="background-color: #434343"><strong>Data Types</strong>
@@ -291,6 +293,8 @@ with a fairly small, curated and representative list of models.
   </tr>
   <tr>
    <td style="background-color: null">FermiNet/Psiformer
+   </td>
+   <td style="background-color: null">O(1M)
    </td>
    <td style="background-color: null">JAX
    </td>
@@ -304,6 +308,8 @@ with a fairly small, curated and representative list of models.
   <tr>
    <td style="background-color: null">AlphaFold 2
    </td>
+   <td style="background-color: null">O(1B)
+   </td>
    <td style="background-color: null">JAX
    </td>
    <td style="background-color: null">fp16, fp32
@@ -315,6 +321,8 @@ with a fairly small, curated and representative list of models.
   </tr>
   <tr>
    <td style="background-color: null">ResNet-50
+   </td>
+   <td style="background-color: null">29M
    </td>
    <td style="background-color: null">TF, PyTorch
    </td>
@@ -328,6 +336,8 @@ with a fairly small, curated and representative list of models.
   <tr>
    <td style="background-color: null">BERT-Large
    </td>
+   <td style="background-color: null">330M
+   </td>
    <td style="background-color: null">TF, PyTorch
    </td>
    <td style="background-color: null">fp16, fp32
@@ -339,6 +349,8 @@ with a fairly small, curated and representative list of models.
   </tr>
   <tr>
    <td style="background-color: null">T5-Large
+   </td>
+   <td style="background-color: null">770M
    </td>
    <td style="background-color: null">TF, PyTorch
    </td>
@@ -352,6 +364,8 @@ with a fairly small, curated and representative list of models.
   <tr>
    <td style="background-color: null">GPT-3
    </td>
+   <td style="background-color: null">175B
+   </td>
    <td style="background-color: null">JAX, PyTorch
    </td>
    <td style="background-color: null">fp16, fp32
@@ -363,6 +377,8 @@ with a fairly small, curated and representative list of models.
   </tr>
   <tr>
    <td style="background-color: null">DLRM
+   </td>
+   <td style="background-color: null">25B
    </td>
    <td style="background-color: null">PyTorch
    </td>
@@ -383,6 +399,11 @@ GCP infra and GitHub actions. This way, we avoid divergence (hardware as well as
 software, drivers, libraries, …) between 1P environment and the ones partners
 have access to, and ease of sharing these setups (e.g. by preconfigured docker
 containers and GCP instances).
+
+Importantly, we will not tie the execution of benchmark to GCP. It will be
+possible to run benchmarks locally, with the results and all intermediate
+artifacts dumped to local storage instead of cloud storage. All GCP
+functionality will be built as optional layers around the execution tooling.
 
 This section sketches the high-level design. A more detailed design will be
 submitted in separate RFCs.
