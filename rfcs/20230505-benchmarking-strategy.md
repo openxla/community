@@ -68,8 +68,10 @@ As a **Compiler Engineer** I want to…
   informed decisions about future engineering choices.
 - **\[P0\]** see comparisons of aforementioned metrics for a variety of
   compilers and frameworks including 3P over time (“Competition”). This way, I
-  can compare the performance of XLA:CPU/GPU, IREE:CPU/CUDA and various state-of-the-art competitors to evaluate competitiveness and success metrics for our compilers,
-  and judge where to invest my efforts to make progress towards target metrics.
+  can compare the performance of XLA:CPU/GPU, IREE:CPU/CUDA and various
+  state-of-the-art competitors to evaluate competitiveness and success metrics
+  for our compilers, and judge where to invest my efforts to make progress
+  towards target metrics.
 - **\[P0\]** be able to reproduce the results of all benchmarks locally to work
   on improving performance. This includes easy reproducibility of the
   environment, ideally by means as simple as selecting an appropriate VM on a
@@ -264,17 +266,28 @@ CUDA-libraries).
   - A100, Ampere GA100
   - H100, Hopper GH100 **- when available**
 
-All tooling will be OSS and available through the OpenXLA repository, enabling
-partners to run the benchmarks on their own hardware, e.g. on-premise or through
+All tooling will be available through the OpenXLA repository, enabling partners
+to run the benchmarks on their own hardware, e.g. on-premise or through
 self-hosted GitHub Action runners.
+
+While we initially focus on GCP, we ultimately want to enable non-GCP hardware
+as well and will design the infrastructure in a way that makes this possible.
+More details on this will follow in separate RFCs. Once the core components are
+in place, we hope to collaborate across OpenXLA partners to extend the list of
+supported hardware. Following the input to this RFC, we are specifically looking
+at AMD GPUs and aarch64 hardware as possible extensions - the latter is
+available on GCP.
 
 ### Models
 
 We have selected the models below as our initial focus set. We expect this list
-to grow over time and will enable the community to add new models into the
-benchmark set. The goal, however, is not to collect a large amount of benchmarks
-and replace repositories such as MLPerf or TF ModelGarden, but rather to stick
-with a fairly small, curated and representative list of models.
+to grow over time. Specifically more SoTA LLMs such as LLaMA have been brought
+up as candidates - we aim at enabling project contributors to add additional
+models with little effort as soon as possible.
+
+The goal, however, is not to collect a large amount of benchmarks and replace
+repositories such as MLPerf or TF ModelGarden, but rather to stick with a fairly
+small, curated and representative list of models.
 
 <table>
   <tr>
