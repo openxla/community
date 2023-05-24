@@ -21,7 +21,7 @@ the current working group at Google dedicated to this project.
 1. We want to provide **interactive** **dashboards** accessible to the community
    to evaluate _Progression_ and _Competition_, including comparisons with
    frameworks and compilers outside of the OpenXLA umbrella. We also provide
-   _Regression_ dashboards for \_IREE on a common infra stack. Regression
+   _Regression_ dashboards for _IREE_ on a common infra stack. Regression
    dashboards for _XLA:CPU and XLA:GPU_ are not the primary focus as of now and
    may be considered in the future.
 1. We focus on **high-level metrics** such as wall-time and max memory
