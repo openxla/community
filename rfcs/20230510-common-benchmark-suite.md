@@ -92,7 +92,8 @@ The framework contains the classes and utilities to define benchmarks. The
 classes only describe the compiler-agnostic parts of a benchmark, which include:
 
 *   Model class to define model metadata and the artifacts (e.g., exported
-    StableHLO of the model, input data, and expected output data).
+    StableHLO, script of model implementation with ML framework, input data, and
+    expected output data).
 *   Device class to define device specifications to run benchmarks (e.g., GCP VM
     models).
 *   Benchmark class to define a pair of the model and target device
@@ -137,12 +138,23 @@ class ModelTestData:
 class DeviceSpec:
   """Device specification to run benchmarks."""
   name: str
+  # Describes the host that runs the runtime and talks to the target device.
   # E.g., GCP
-  device_type: DeviceType
+  host_type: str
   # E.g., c2-standard-16
-  device_model: str
+  host_model: str
   # E.g., linux-x86_64
-  device_architecture: str
+  host_environment: str
+
+  # Describes the target accelerator.
+  # E.g., cpu
+  accelerator_type: str
+  # E.g., nvidia-a100-40g
+  accelerator_model: str
+  # E.g., intel-cascadelake, nvidia-ampere,
+  accelerator_architecture: str
+  # E.g., "num_of_gpus": 4
+  accelerator_attributes: Dict[str, Any]
 
 class InferenceBenchmark:
   """Common inference benchmark."""
