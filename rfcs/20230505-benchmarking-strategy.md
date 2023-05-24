@@ -24,7 +24,7 @@ the current working group at Google dedicated to this project.
    _Regression_ dashboards for _IREE_ on a common infra stack. Regression
    dashboards for _XLA:CPU and XLA:GPU_ are not the primary focus as of now and
    may be considered in the future.
-1. We focus on **high-level metrics** such as wall-time and max memory
+3. We focus on **high-level metrics** such as wall-time and max memory
    consumption that can be obtained without instrumentation. For training, this
    includes framework overhead, and it is up to the benchmark selection and
    detailed dashboard design to ensure comparability. The infrastructure design
