@@ -18,7 +18,7 @@ the current working group at Google dedicated to this project.
    **infrastructure** to run automated benchmarks regularly. OpenXLA engineers
    must be able to re-run and reproduce the results of a benchmark in the exact
    environment.
-1. We want to provide **interactive** **dashboards** accessible to the community
+2. We want to provide **interactive** **dashboards** accessible to the community
    to evaluate _Progression_ and _Competition_, including comparisons with
    frameworks and compilers outside of the OpenXLA umbrella. We also provide
    _Regression_ dashboards for _IREE_ on a common infra stack. Regression
