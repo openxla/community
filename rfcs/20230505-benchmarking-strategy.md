@@ -36,7 +36,7 @@ IREE:CPU/CUDA to analyze E2E latency and memory. It will show comparisons over
 time on an initial set of agreed-upon models (as listed under “Detailed
 Requirements”), which will also define the frameworks to support. Dashboards
 will update automatically at least once a week, ideally nightly, using the
-latest head or nightly release (whereas 3P compilers and frameworks may need to
+latest head or nightly release (whereas third-party compilers and frameworks may need to
 rely on official releases, depending on availability and release strategy).
 
 Initial focus requirements are listed as **P0** below. **P1** requirements will
