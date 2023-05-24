@@ -96,9 +96,8 @@ As a **Compiler Engineer** I want to…
   Regressions should be detected on a variety of hardware, models and
   configurations, but I will want a high-level summary of the results and not be
   presented with all combinations at all times.
-- **\[P1\]** run a preselected sub-set of the benchmark suite on demand on a
-  draft change so I can judge the performance before merging into main (“A/B
-  Diff”).
+- **\[P1\]** run a set of benchmarks on demand on a pending change to judge the
+  performance impact before merging into main.
 - **\[P1\]** be able to add new, selected benchmarks for comparison, post- and
   pre-submit regression to cover a set of greater variety and include specific
   models which are important to my use-case. These models will then be made part
@@ -117,10 +116,10 @@ We can break the use cases into three different areas:
 1. **Comparison**: High-level overview of performance over time. This includes
    both Progression and Competition (“Compiler over time” and “Compiler vs
    others over time”).
-1. **Regression**: Detailed view of evolution of the same compiler over time.
+2. **Regression**: Detailed view of evolution of the same compiler over time.
    Provides support in finding culprit PRs and regression monitoring after
    changes have been merged to main.
-1. **Presubmit regression**: Ability to run a subset of the regression
+3. **Presubmit regression**: Ability to run a subset of the regression
    benchmarking suite on a PR to identify potential performance implications,
    and make informed decisions about merging the PR during review.
 
@@ -145,38 +144,12 @@ framework / bridge / plug-in / compilers. We aim at good coverage around both in
 the long run, but we must ensure comparability in benchmark selection (e.g. we
 should not compare framework- and compiler-level benchmarks directly).
 
-<table>
-  <tr>
-   <td style="background-color: #434343"><strong>Metric</strong>
-   </td>
-   <td style="background-color: #434343"><strong>Type of Benchmark</strong>
-   </td>
-  </tr>
-  <tr>
-   <td>Total (wall) time
-   </td>
-   <td>Inference, Training, Compilation, Microbenchmarks
-   </td>
-  </tr>
-  <tr>
-   <td>Peak memory host / device
-   </td>
-   <td>Inference, Training, Compilation, Microbenchmarks
-   </td>
-  </tr>
-  <tr>
-   <td>Inference latency and throughput
-   </td>
-   <td>Inference
-   </td>
-  </tr>
-  <tr>
-   <td>Training throughput (e.g. examples / sec)
-   </td>
-   <td>Training
-   </td>
-  </tr>
-</table>
+| Metric                                    | Type of Benchmark                                 |
+|-------------------------------------------|---------------------------------------------------|
+| Total (wall) time                         | Inference, Training, Compilation, Microbenchmarks |
+| Peak memory host / device                 | Inference, Training, Compilation, Microbenchmarks |
+| Inference latency and throughput          | Inference                                         |
+| Training throughput (e.g. examples / sec) | Training                                          |
 
 It is expected that the benchmarks themselves will take care of establishing
 comparability for metrics. It is up to the metric definition to specify e.g.
@@ -221,13 +194,13 @@ OpenXLA umbrella:
 - **\[P2\]** XLA:GPU
 - **\[P2\]** XLA:CPU
 
-Regression benchmarks need to be able to run for each PR to support culprit
-finding. Whether they actually run on each PR (post-submit) or find the actual
-point of regression by bisecting after a regression has been detected is up to
-the detailed design. Regression benchmarks will focus on IREE first, and exact
-scope of XLA regression requirements is still TBD.
+Regression benchmarks need to be able to run for each commit to support culprit
+finding. Whether they actually run on each commit or find the point of
+regression by bisecting after a regression has been detected is up to the
+detailed design. Regression benchmarks will focus on IREE first, and exact scope
+of XLA regression requirements is still TBD.
 
-### Pre-submit regression (A/B diff)
+### Pre-submit regression
 
 Presubmit regression testing will only be offered for Compilers developed under
 the OpenXLA umbrella. We already have presubmits running for both compilers and
@@ -289,129 +262,25 @@ The goal, however, is not to collect a large amount of benchmarks and replace
 repositories such as MLPerf or TF ModelGarden, but rather to stick with a fairly
 small, curated and representative list of models.
 
-<table>
-  <tr>
-   <td style="background-color: #434343"><strong>Name</strong>
-   </td>
-   <td style="background-color: #434343"><strong>Param Count</strong>
-   </td>
-   <td style="background-color: #434343"><strong>Format</strong>
-   </td>
-   <td style="background-color: #434343"><strong>Data Types</strong>
-   </td>
-   <td style="background-color: #434343"><strong>BM Type</strong>
-   </td>
-   <td style="background-color: #434343"><strong>Targets</strong>
-   </td>
-  </tr>
-  <tr>
-   <td style="background-color: null">FermiNet/Psiformer
-   </td>
-   <td style="background-color: null">O(1M)
-   </td>
-   <td style="background-color: null">JAX
-   </td>
-   <td style="background-color: null">f32
-   </td>
-   <td style="background-color: null">Training
-   </td>
-   <td style="background-color: null">CUDA
-   </td>
-  </tr>
-  <tr>
-   <td style="background-color: null">AlphaFold 2
-   </td>
-   <td style="background-color: null">O(1B)
-   </td>
-   <td style="background-color: null">JAX
-   </td>
-   <td style="background-color: null">fp16, fp32
-   </td>
-   <td style="background-color: null">Inference
-   </td>
-   <td style="background-color: null">CUDA
-   </td>
-  </tr>
-  <tr>
-   <td style="background-color: null">ResNet-50
-   </td>
-   <td style="background-color: null">29M
-   </td>
-   <td style="background-color: null">TF, PyTorch
-   </td>
-   <td style="background-color: null">fp16, fp32
-   </td>
-   <td style="background-color: null">Inference
-   </td>
-   <td style="background-color: null">CUDA, x86
-   </td>
-  </tr>
-  <tr>
-   <td style="background-color: null">BERT-Large
-   </td>
-   <td style="background-color: null">330M
-   </td>
-   <td style="background-color: null">TF, PyTorch
-   </td>
-   <td style="background-color: null">fp16, fp32
-   </td>
-   <td style="background-color: null">Training, Inference
-   </td>
-   <td style="background-color: null">CUDA, x86
-   </td>
-  </tr>
-  <tr>
-   <td style="background-color: null">T5-Large
-   </td>
-   <td style="background-color: null">770M
-   </td>
-   <td style="background-color: null">TF, PyTorch
-   </td>
-   <td style="background-color: null">fp16, fp32
-   </td>
-   <td style="background-color: null">Inference
-   </td>
-   <td style="background-color: null">CUDA, x86
-   </td>
-  </tr>
-  <tr>
-   <td style="background-color: null">GPT-3
-   </td>
-   <td style="background-color: null">175B
-   </td>
-   <td style="background-color: null">JAX, PyTorch
-   </td>
-   <td style="background-color: null">fp16, fp32
-   </td>
-   <td style="background-color: null">Training
-   </td>
-   <td style="background-color: null">CUDA
-   </td>
-  </tr>
-  <tr>
-   <td style="background-color: null">DLRM
-   </td>
-   <td style="background-color: null">25B
-   </td>
-   <td style="background-color: null">PyTorch
-   </td>
-   <td style="background-color: null">fp16, fp32
-   </td>
-   <td style="background-color: null">Inference
-   </td>
-   <td style="background-color: null">CUDA, x86
-   </td>
-  </tr>
-</table>
+| Name               | Param Count | Format       | Data Types | BM Type             | Targets   |
+|--------------------|-------------|--------------|------------|---------------------|-----------|
+| FermiNet/Psiformer | O(1M)       | JAX          | f32        | Training            | CUDA      |
+| AlphaFold 2        | O(1B)       | JAX          | fp16, fp32 | Inference           | CUDA      |
+| ResNet-50          | 29M         | TF, PyTorch  | fp16, fp32 | Inference           | CUDA, x86 |
+| BERT-Large         | 330M        | TF, PyTorch  | fp16, fp32 | Training, Inference | CUDA, x86 |
+| T5-Large           | 770M        | TF, PyTorch  | fp16, fp32 | Inference           | CUDA, x86 |
+| GPT-3              | 175B        | JAX, PyTorch | fp16, fp32 | Training            | CUDA      |
+| DLRM               | 25B         | PyTorch      | fp16, fp32 | Inference           | CUDA, x86 |
 
 ## Design Overview
 
-The design seeks to ensure equal footing of 1P and 3P engineers and full
-reproducibility of the benchmark results. The infrastructure will be built on
-GCP infra and GitHub actions. This way, we avoid divergence (hardware as well as
-software, drivers, libraries, …) between 1P environment and the ones partners
-have access to, and ease of sharing these setups (e.g. by preconfigured docker
-containers and GCP instances).
+The design seeks to ensure equal footing of contributors from different
+organizations and full reproducibility of the benchmark results. The
+infrastructure will be built on publicly available infrastructure: GCP and
+GitHub Actions. This way, we avoid divergence (hardware as well as software,
+drivers, libraries, …) between environments used by different organizations and
+ease of sharing these setups (e.g. by preconfigured docker containers and GCP
+instances).
 
 Importantly, we will not tie the execution of benchmark to GCP. It will be
 possible to run benchmarks locally, with the results and all intermediate
