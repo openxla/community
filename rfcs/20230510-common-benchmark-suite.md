@@ -91,17 +91,21 @@ The common benchmark suite consists of:
 The framework contains the classes and utilities to define benchmarks. The
 classes only describe the compiler-agnostic parts of a benchmark, which include:
 
-*   Model class to define model metadata and the artifacts (e.g., exported
-    StableHLO, script of model implementation with ML framework, input data, and
-    expected output data).
+*   Model class to define model metadata and the artifacts.
+    *   Model artifacts will be provided in the original format (the
+        implementation with ML framework) and its derived formats (e.g, exported
+        StableHLO).
+*   Test data class to define input and expected output data.
+    *   Expected output are provided with tolerance settings for verification.
 *   Device class to define device specifications to run benchmarks (e.g., GCP VM
-    models).
-*   Benchmark class to define a pair of the model and target device
-    specification to run.
+    types, host environment, specification of the accelerator).
+*   Benchmark class to define a tuple of the model, input data, expected output,
+    and target device specification to run.
 
-Model implementations will also be available in their respective frameworks e.g.
-JAX, PyTorch, Tensorflow. Framework-level benchmarks can import these
-implementations through Python modules.
+As model implementations will be available in their respective frameworks (e.g.,
+JAX, PyTorch, Tensorflow). Framework-level benchmarks can import these
+implementations through Python modules. Utilities to compare the model output
+with the expected results will also be provided in the benchmark suite.
 
 #### Collections of Benchmark Definitions
 
@@ -133,8 +137,6 @@ class TestDataFormat(Enum):
   # Type of test data format.
   NUMPY_INPUT = "numpy_input"
   NUMPY_GOLDEN_VALUE = "numpy_golden_value"
-  # Raw text and config can be passed to tokenizer.
-  TEXT_INPUT = "text_input"
 
 class ModelTestData:
   """Input and expected output data in variety of formats derived from the same
@@ -143,11 +145,8 @@ class ModelTestData:
   # - For numpy input, it's the URL to fetch .npy that serializes a tensor list.
   # - For numpy golden value, it's the URL to fetch an archive includes .npy
   #   of the golden values and a JSON to describe the comparison tolerance.
-  # - For text input, it's the URL to fetch an archive includes the text and
-  #   JSON config to tokenize the text with framework's tokenizer.
-  # The idea is to implement a data processor for each TestDataFormat. The
-  # processor takes the data_artifact and output from the model to return the
-  # verdict (Or generates the input data for the model, e.g., with tokenizer).
+  # The idea is to implement a verifier for each output TestDataFormat, which
+  # takes the expected output data and model output to return a verdict.
   data_artifacts: Dict[TestDataFormat, str]
 
 class DeviceSpec:
@@ -190,7 +189,7 @@ BERT_ON_A100 = InferenceBenchmark(
   ...
 )
 
-### In module numpy_data_processor
+### In module `numpy_data_verifier`
 def verify_golden_value(model_output, golden_value_artifact) -> bool:
   # Get the golden value with comparison config, e.g., mode, tolerance.
   golden_value, compare_config = load_golden_value_and_tolerance(
@@ -205,7 +204,7 @@ XLA:GPU compiler-level benchmarks with `bert_benchmark.BERT_ON_A100`. Use of
 input/output data and correctness checks have been omitted for brevity.
 
 ```py
-from openxla_benchmark import bert_benchmark, numpy_data_processor
+from openxla_benchmark import bert_benchmark, numpy_data_verifier
 
 RUN_HLO_MODULE_BINARY_PATH="/bazel-bin/tensorflow/run_hlo_module"
 
@@ -237,7 +236,7 @@ def benchmark_xla_gpu(common_benchmark):
   ]
   expected_output_path = download_file(expected_output_remote_path)
   # Compare output with the golden value.
-  verify_verdict = numpy_data_processor.verify_golden_value(
+  verify_verdict = numpy_data_verifier.verify_golden_value(
     model_output=tensor_output,
     golden_value_artifact=expected_output_path)
 
