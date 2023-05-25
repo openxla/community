@@ -121,24 +121,39 @@ In the common benchmark suite, the inference benchmarks are defined as:
 ```py
 ### In module `benchmark_framework`
 class Model:
-  """Model to benchmark."""
+  """Model to benchmark with variety of formats derived from the same source."""
   name: str
-  # For the exported model, it's the URL to fetch the model.
-  # For the model implementation with framework, it's the file path to import
-  # the Python model module with `importlib.import_module`. This prevents
-  # pulling in unnecessary dependencies from those modules.
-  source_artifacts: Dict[ModelFormat, str]
+  # - For the exported model, it's the URL to fetch the model.
+  # - For the model implementation with framework, it's the file path to import
+  #   the Python model module with `importlib.import_module`. This prevents
+  #   pulling in unnecessary dependencies from those modules.
+  model_artifacts: Dict[ModelFormat, str]
+
+class TestDataFormat(Enum):
+  # Type of test data format.
+  NUMPY_INPUT = "numpy_input"
+  NUMPY_GOLDEN_VALUE = "numpy_golden_value"
+  # Raw text and config can be passed to tokenizer.
+  TEXT_INPUT = "text_input"
 
 class ModelTestData:
-  """Input and expected output data."""
+  """Input and expected output data in variety of formats derived from the same
+  source (e.g., original text and its tokenized tensor)."""
   name: str
-  tensor_shape: List[int]
-  artifact_url: str
+  # - For numpy input, it's the URL to fetch .npy that serializes a tensor list.
+  # - For numpy golden value, it's the URL to fetch an archive includes .npy
+  #   of the golden values and a JSON to describe the comparison tolerance.
+  # - For text input, it's the URL to fetch an archive includes the text and
+  #   JSON config to tokenize the text with framework's tokenizer.
+  # The idea is to implement a data processor for each TestDataFormat. The
+  # processor takes the data_artifact and output from the model to return the
+  # verdict (Or generates the input data for the model, e.g., with tokenizer).
+  data_artifacts: Dict[TestDataFormat, str]
 
 class DeviceSpec:
   """Device specification to run benchmarks."""
   name: str
-  # Describes the host that runs the runtime and talks to the target device.
+  # Describes the host that runs the runtime and talks to the accelerator.
   # E.g., GCP
   host_type: str
   # E.g., c2-standard-16
@@ -147,7 +162,7 @@ class DeviceSpec:
   host_environment: str
 
   # Describes the target accelerator.
-  # E.g., cpu
+  # E.g., cpu, gpu
   accelerator_type: str
   # E.g., nvidia-a100-40g
   accelerator_model: str
@@ -161,8 +176,8 @@ class InferenceBenchmark:
   # Unique id to identify the benchmark.
   benchmark_id: str
   model: Model
-  input_data: List[ModelTestData]
-  expected_output: List[ModelTestData]
+  input_data: ModelTestData
+  expected_output: ModelTestData
   target_device_spec: DeviceSpec
 
 ### In module `bert_benchmark`
@@ -174,6 +189,15 @@ BERT_ON_A100 = InferenceBenchmark(
   target_device_spec=GPU_100_DEVICE_SPEC,
   ...
 )
+
+### In module numpy_data_processor
+def verify_golden_value(model_output, golden_value_artifact) -> bool:
+  # Get the golden value with comparison config, e.g., mode, tolerance.
+  golden_value, compare_config = load_golden_value_and_tolerance(
+    golden_value_artifact)
+  # Compare the values with heuristics in compare_config.
+  return heuristic_compare(
+    model_output, golden_value, compare_config, tolerance)
 ```
 
 Here is a simple example of how the common benchmark suite can be used to run
@@ -181,23 +205,43 @@ XLA:GPU compiler-level benchmarks with `bert_benchmark.BERT_ON_A100`. Use of
 input/output data and correctness checks have been omitted for brevity.
 
 ```py
-from openxla_benchmark import bert_benchmark
+from openxla_benchmark import bert_benchmark, numpy_data_processor
 
 RUN_HLO_MODULE_BINARY_PATH="/bazel-bin/tensorflow/run_hlo_module"
 
 def benchmark_xla_gpu(common_benchmark):
-  hlo_remote_path = common_benchmark.model.source_artifacts[
+  hlo_remote_path = common_benchmark.model.model_artifacts[
     ModelFormat.HLO_DUMP
   ]
   hlo_path = download_file(hlo_remote_path)
 
-  cmd = [RUN_HLO_MODULE_BINARY_PATH, "--input_format=hlo",
-    "--platform=gpu", f"--input_module={hlo_path}"]
+  input_remote_path = ommon_benchmark.input.data_artifacts[
+    TestDataFormat.NUMPY_INPUT
+  ]
+  input_path = download_file(input_remote_path)
+
+  cmd = [
+    RUN_HLO_MODULE_BINARY_PATH,
+    "--input_format=hlo",
+    "--platform=gpu",
+    f"--input_module={hlo_path}",
+    f"--input_data=@{input_path}"
+  ]
   output = subprocess.run(cmd, ...)
 
-  # Parse output...
+  # Parse output into numpy array (details omitted).
+  tensor_output = parse_output(output)
 
-  return metrics
+  expected_output_remote_path = common_benchmark.expected_output.data_artifacts[
+    TestDataFormat.NUMPY_GOLDEN_VALUE
+  ]
+  expected_output_path = download_file(expected_output_remote_path)
+  # Compare output with the golden value.
+  verify_verdict = numpy_data_processor.verify_golden_value(
+    model_output=tensor_output,
+    golden_value_artifact=expected_output_path)
+
+  return verify_verdict, metrics
 ```
 
 Here is another example with IREE. It extends the common benchmark suite with
