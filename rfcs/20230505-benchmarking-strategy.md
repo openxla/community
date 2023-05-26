@@ -13,31 +13,32 @@ the current working group at Google dedicated to this project.
 
 ### Summary
 
-1. For all compilers under the OpenXLA umbrella - _XLA:GPU, XLA:CPU, IREE:CUDA
-   and IREE:CPU_ (x86 llvm-cpu backend) - we want to provide an
-   **infrastructure** to run automated benchmarks regularly. OpenXLA engineers
-   must be able to re-run and reproduce the results of a benchmark in the exact
-   environment.
-2. We want to provide **interactive** **dashboards** accessible to the community
+1. For all compilers/repositories under the OpenXLA umbrella - with an initial
+   focus on, but not limited to _XLA:GPU, XLA:CPU, IREE:CUDA and IREE:CPU_ (x86
+   llvm-cpu backend) - we want to provide an **infrastructure** to run automated
+   benchmarks regularly. OpenXLA engineers must be able to re-run and reproduce
+   the results of a benchmark in the exact environment.
+1. We want to provide **interactive** **dashboards** accessible to the community
    to evaluate _Progression_ and _Competition_, including comparisons with
    frameworks and compilers outside of the OpenXLA umbrella. We also provide
    _Regression_ dashboards for _IREE_ on a common infra stack. Regression
    dashboards for _XLA:CPU and XLA:GPU_ are not the primary focus as of now and
    may be considered in the future.
-3. We focus on **high-level metrics** such as wall-time and max memory
-   consumption that can be obtained without instrumentation. For training, this
-   includes framework overhead, and it is up to the benchmark selection and
-   detailed dashboard design to ensure comparability. The infrastructure design
-   must be flexible enough to support instrumented metrics and microbenchmarks,
-   but we defer the detailed requirements and design.
+1. We focus on **high-level metrics** such as wall-time and max memory
+   consumption that can be obtained without instrumentation. In some cases, e.g.
+   for training, this includes framework overhead, and it is up to the benchmark
+   selection and detailed dashboard design to ensure comparability. The
+   infrastructure design must be flexible enough to support instrumented metrics
+   and microbenchmarks, but we defer the detailed requirements and design.
 
 Initial focus will be on Progression and Competition for XLA:CPU/GPU and
 IREE:CPU/CUDA to analyze E2E latency and memory. It will show comparisons over
 time on an initial set of agreed-upon models (as listed under “Detailed
 Requirements”), which will also define the frameworks to support. Dashboards
 will update automatically at least once a week, ideally nightly, using the
-latest head or nightly release (whereas third-party compilers and frameworks may need to
-rely on official releases, depending on availability and release strategy).
+latest head or nightly release (whereas third-party compilers and frameworks may
+need to rely on official releases, depending on availability and release
+strategy).
 
 Initial focus requirements are listed as **P0** below. **P1** requirements will
 be implemented in the next stages, but will be considered during the design.
@@ -116,10 +117,10 @@ We can break the use cases into three different areas:
 1. **Comparison**: High-level overview of performance over time. This includes
    both Progression and Competition (“Compiler over time” and “Compiler vs
    others over time”).
-2. **Regression**: Detailed view of evolution of the same compiler over time.
+1. **Regression**: Detailed view of evolution of the same compiler over time.
    Provides support in finding culprit PRs and regression monitoring after
    changes have been merged to main.
-3. **Presubmit regression**: Ability to run a subset of the regression
+1. **Presubmit regression**: Ability to run a subset of the regression
    benchmarking suite on a PR to identify potential performance implications,
    and make informed decisions about merging the PR during review.
 
@@ -133,8 +134,7 @@ We want to collect and visualize metrics for:
 - **\[P2\]** Microbenchmarks
 
 We will focus on high-level “black box” metrics that do not require compiler
-instrumentation and can thus be collected for 3rd party compilers as well. These
-can be implemented on either a framework- or OS-level.
+instrumentation and can thus be collected for third-party compilers as well.
 
 The design will support "compiler-level benchmarks" that take as input
 StableHLO, and "framework-level benchmarks", which take as input programs
@@ -144,12 +144,12 @@ framework / bridge / plug-in / compilers. We aim at good coverage around both in
 the long run, but we must ensure comparability in benchmark selection (e.g. we
 should not compare framework- and compiler-level benchmarks directly).
 
-| Metric                                    | Type of Benchmark                                 |
+| Metric | Type of Benchmark |
 |-------------------------------------------|---------------------------------------------------|
-| Total (wall) time                         | Inference, Training, Compilation, Microbenchmarks |
-| Peak memory host / device                 | Inference, Training, Compilation, Microbenchmarks |
-| Inference latency and throughput          | Inference                                         |
-| Training throughput (e.g. examples / sec) | Training                                          |
+| Total (wall) time | Inference, Training, Compilation, Microbenchmarks | | Peak
+memory host / device | Inference, Training, Compilation, Microbenchmarks | |
+Inference latency and throughput | Inference | | Training throughput (e.g.
+examples / sec) | Training |
 
 It is expected that the benchmarks themselves will take care of establishing
 comparability for metrics. It is up to the metric definition to specify e.g.
@@ -262,15 +262,14 @@ The goal, however, is not to collect a large amount of benchmarks and replace
 repositories such as MLPerf or TF ModelGarden, but rather to stick with a fairly
 small, curated and representative list of models.
 
-| Name               | Param Count | Format       | Data Types | BM Type             | Targets   |
+| Name | Param Count | Format | Data Types | BM Type | Targets |
 |--------------------|-------------|--------------|------------|---------------------|-----------|
-| FermiNet/Psiformer | O(1M)       | JAX          | f32        | Training            | CUDA      |
-| AlphaFold 2        | O(1B)       | JAX          | fp16, fp32 | Inference           | CUDA      |
-| ResNet-50          | 29M         | TF, PyTorch  | fp16, fp32 | Inference           | CUDA, x86 |
-| BERT-Large         | 330M        | TF, PyTorch  | fp16, fp32 | Training, Inference | CUDA, x86 |
-| T5-Large           | 770M        | TF, PyTorch  | fp16, fp32 | Inference           | CUDA, x86 |
-| GPT-3              | 175B        | JAX, PyTorch | fp16, fp32 | Training            | CUDA      |
-| DLRM               | 25B         | PyTorch      | fp16, fp32 | Inference           | CUDA, x86 |
+| FermiNet/Psiformer | O(1M) | JAX | f32 | Training | CUDA | | AlphaFold 2 |
+O(1B) | JAX | fp16, fp32 | Inference | CUDA | | ResNet-50 | 29M | TF, PyTorch |
+fp16, fp32 | Inference | CUDA, x86 | | BERT-Large | 330M | TF, PyTorch | fp16,
+fp32 | Training, Inference | CUDA, x86 | | T5-Large | 770M | TF, PyTorch | fp16,
+fp32 | Inference | CUDA, x86 | | GPT-3 | 175B | JAX, PyTorch | fp16, fp32 |
+Training | CUDA | | DLRM | 25B | PyTorch | fp16, fp32 | Inference | CUDA, x86 |
 
 ## Design Overview
 
@@ -282,9 +281,9 @@ drivers, libraries, …) between environments used by different organizations an
 ease of sharing these setups (e.g. by preconfigured docker containers and GCP
 instances).
 
-Importantly, we will not tie the execution of benchmark to GCP. It will be
-possible to run benchmarks locally, with the results and all intermediate
-artifacts dumped to local storage instead of cloud storage. All GCP
+Importantly, we will not tie the execution of benchmark to GCP and GitHub
+Actions. It will be possible to run benchmarks locally, with the results and all
+intermediate artifacts dumped to local storage instead of cloud storage. All GCP
 functionality will be built as optional layers around the execution tooling.
 
 This section sketches the high-level design. A more detailed design will be
