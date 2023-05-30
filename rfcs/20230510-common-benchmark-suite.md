@@ -95,7 +95,7 @@ classes only describe the compiler-agnostic parts of a benchmark, which include:
         implementation with ML framework) and its derived formats (e.g, exported
         StableHLO).
 *   Test data class to define input and expected output data.
-    *   Expected output are provided with tolerance settings for verification.
+    *   Expected outputs are provided with tolerance settings for verification.
 *   Device class to define device specifications to run benchmarks (e.g., GCP VM
     types, host environment, specification of the accelerator).
 *   Benchmark class to define a tuple of the model, input data, expected output,
@@ -106,7 +106,7 @@ JAX, PyTorch, Tensorflow). Framework-level benchmarks can import these
 implementations through Python modules. Utilities to compare the model output
 with the expected results will also be provided in the benchmark suite.
 
-Digests of all artifacts and model implementations are also included in the
+The digests of all artifacts and model implementations are also included in the
 benchmark definition to help spot differences between benchmark runs (e.g. their
 changes might show impacts on regression tracking). The digest of a file
 artifact is its file hash. For a model implementation, the digest is the last
@@ -170,14 +170,14 @@ class ModelDerivation :
   # - For the model implementation with framework, it's the Python module path
   #   to import the model module with `importlib.import_module`. This prevents
   #   pulling in unnecessary dependencies from those modules.
-  aritfact: str
+  artifact: str
   # - For the exported model, it's the hash digest of the artifact.
   # - For the model implementation, it's the last git commit hash of the model's
   #   code directory.
   artifact_digest: str
-  # Input format, usually same as its soruce model implementation.
+  # Input format, usually the same as its source model.
   input_format: DataFormat
-  # Output format, usually same as its soruce model implementation.
+  # Output format, usually the same as its source model.
   output_format: DataFormat
 
 class Model:
@@ -221,7 +221,8 @@ class DeviceSpec:
   # E.g., linux-x86_64
   host_environment: str
 
-  # Describes the target accelerator (can be same as the host for CPU benchmarks).
+  # Describes the target accelerator (can be the same as the host for CPU
+  # benchmarks).
   # E.g., cpu, gpu, my-custom-accelerator
   accelerator_type: str
   # E.g., nvidia-a100-40g
@@ -281,8 +282,8 @@ def benchmark_xla_gpu(common_benchmark):
   # dependencies are described in the benchmark definitions. Fetch them here
   # for simplicity's sake.
   input_path = fetch_file(input_remote_path, input_digest)
-  # Convert the source model input to numpy array. This might do nothing if the
-  # source model is already using a compatible numpy format.
+  # Convert the source model input to a numpy array. This might do nothing if
+  # the source model is already using a compatible numpy format.
   numpy_input_path = convert_to_numpy_tensor(
     source_model.input_format, input_path)
 
@@ -295,9 +296,9 @@ def benchmark_xla_gpu(common_benchmark):
   ]
   output = subprocess.run(cmd, ...)
 
-  # Parse output into numpy array (details omitted).
+  # Parse output into a numpy array (details omitted).
   numpy_output = parse_output(output)
-  # Convert the ouptut numpy array to source model output.
+  # Convert the output numpy array to source model output.
   model_output = convert_from_numpy_tensor(
     source_model.output_format, numpy_output)
 
@@ -316,7 +317,7 @@ def benchmark_xla_gpu(common_benchmark):
 Here is another example with IREE. It extends the common benchmark suite with
 IREE's own configurations and flags. The existing IREE benchmark framework can
 then compile and run benchmarks following the detailed configurations. Some
-implementation details are ommited.
+implementation details are omitted.
 
 ```py
 from openxla_benchmark import benchmark_framework, bert_benchmark
