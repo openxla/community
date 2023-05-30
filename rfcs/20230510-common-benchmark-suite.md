@@ -13,7 +13,7 @@
 ## Context
 
 This is a subsequent RFC of
-[OpenXLA Benchmarking Strategy](https://github.com/openxla/community/pull/75)
+[OpenXLA Benchmarking Strategy](/rfcs/20230505-benchmarking-strategy.md)
 outlines a benchmark suite for comparative and regression benchmarking for the
 OpenXLA and third-party compilers that the OpenXLA community is interested in.
 It is part of the **OOBI** (OpenXLA OSS Benchmarking Infrastructure).
@@ -70,9 +70,8 @@ common benchmark suite.
 The figure below shows the relationship between components. This RFC covers the
 contents of "OpenXLA Benchmark Repository" and the integration into compiler
 repositories. See
-[OpenXLA Benchmarking Strategy](https://github.com/openxla/community/pull/75)
-for how OOBI stores benchmark results in the database and visualizes in the
-dashboard.
+[OpenXLA Benchmarking Strategy](/rfcs/20230505-benchmarking-strategy.md) for how
+OOBI stores benchmark results in the database and visualizes in the dashboard.
 
 ![Project structure](20230510-common-benchmark-suite/project-structure.png)
 
@@ -119,7 +118,7 @@ Several collections of benchmarks will be defined in the common benchmark suite,
 initially for the comparative benchmarking. The benchmark collections are
 subject to growth overtime. An initial suite has been defined in the **Models**
 section of
-[OpenXLA Benchmarking Strategy](https://github.com/openxla/community/pull/75).
+[OpenXLA Benchmarking Strategy](/rfcs/20230505-benchmarking-strategy.md).
 
 The common benchmark suite also intentionally only includes a few exported model
 formats that are widely used as compiler input and stable. The initial set
