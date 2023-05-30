@@ -107,6 +107,18 @@ JAX, PyTorch, Tensorflow). Framework-level benchmarks can import these
 implementations through Python modules. Utilities to compare the model output
 with the expected results will also be provided in the benchmark suite.
 
+The common benchmark suite intentionally only includes a few exported model
+formats that are widely used as compiler input and stable. The initial set
+includes:
+
+*   StableHLO
+*   Tensorflow v1/v2 saved model
+*   TFLite flatbuffer
+
+For other exported model formats (e.g. Linalg MLIR from
+[torch-mlir](https://github.com/llvm/torch-mlir/tree/main)), compiler projects
+should import them from the source model implementation and cache by themselves.
+
 #### Collections of Benchmark Definitions
 
 Several collections of benchmarks will also be defined in the common benchmark
@@ -126,12 +138,16 @@ In the common benchmark suite, the inference benchmarks are defined as:
 ### In module `benchmark_framework`
 class ModelFormat(Enum):
   """Supported framework/stable model formats."""
+  # Framework model formats.
+  TENSORFLOW_V1 = "tensorflow_v1"
   TENSORFLOW_V2 = "tensorflow_v2"
   PYTORCH = "pytorch"
-  STABLEHLO = "stablehlo"
   JAX = "jax"
+  # Exported model formats.
+  TENSORFLOW_V1_SAVED_MODEL = "tensorflow_v1_saved_model"
   TENSORFLOW_V2_SAVED_MODEL = "tensorflow_v2_saved_model"
   TFLITE_FLATBUFFER = "tflite_flatbuffer"
+  STABLEHLO = "stablehlo"
 
 class DataFormat(Enum):
   """Types of input/output data format."""
@@ -166,8 +182,8 @@ class Model:
   # implementation and its exported models.
   # A single model may have multiple derivations for various ways it can be
   # captured as input to a runtime. For instance, it could be an MLIR bytecode
-  # file of the StableHLO dialect, a TFLite flatbuffer, a TensorFlow Saved
-  # Model, or the original JAX source file.
+  # file of the StableHLO dialect, a TFLite flatbuffer, a Tensorflow saved
+  # model, or the original JAX source file.
   derivations: Dict[ModelFormat, ModelDerivation]
 
 class Verifier:
@@ -197,7 +213,7 @@ class DeviceSpec:
   host_environment: str
 
   # Describes the target accelerator (can be same as the host for CPU benchmarks).
-  # E.g., cpu, gpu, my-custom-accelerator 
+  # E.g., cpu, gpu, my-custom-accelerator
   accelerator_type: str
   # E.g., nvidia-a100-40g
   accelerator_model: str
