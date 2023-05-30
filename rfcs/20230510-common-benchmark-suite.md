@@ -203,10 +203,9 @@ class ModelTestData:
   name: str
   # Information of the data source.
   source_info: str
-  # Versioned (URL, digest) to download test data for each format.
-  artifacts: Dict[DataFormat, (str, str)]
-  # Verifier with parameters (e.g. tolerance) for the expected output.
-  verifier: Optional[Verifier]
+  # Versioned (URL, digest) to download test data for each format and the
+  # verifier of the expected output if applicable.
+  artifacts: Dict[DataFormat, (str, str, Optional[Verifier])]
 
 class DeviceSpec:
   """Device specification to run benchmarks."""
@@ -300,12 +299,12 @@ def benchmark_xla_gpu(common_benchmark):
   model_output = convert_from_numpy_tensor(
     source_model.output_format, numpy_output)
 
-  expected_output_remote_path, expected_output_digest = (
+  expected_output_remote_path, expected_output_digest, verifier = (
     common_benchmark.expected_output.artifacts[source_model.output_format])
   expected_output_path = fetch_file(
     expected_output_remote_path, expected_output_digest)
   verify_verdict = data_verifier.verify(
-    verifier=common_benchmark.expected_output.verifier,
+    verifier=verifier,
     model_output=model_output,
     expected_output_path=expected_output_path)
 
