@@ -107,10 +107,9 @@ implementations through Python modules. Utilities to compare the model output
 with the expected results will also be provided in the benchmark suite.
 
 The digests of all artifacts and model implementations are also included in the
-benchmark definition to help spot differences between benchmark runs (e.g. their
-changes might show impacts on regression tracking). The digest of a file
-artifact is its file hash. For a model implementation, the digest is the last
-git commit hash of its code directory in the repository.
+benchmark definition to help verify if two benchmark runs use the same input.
+The digest of a file artifact is the file hash. For a model implementation, the
+digest can be the last git commit hash of its code directory.
 
 #### Collections of Benchmark Definitions
 
@@ -121,7 +120,7 @@ section of
 [OpenXLA Benchmarking Strategy](/rfcs/20230505-benchmarking-strategy.md).
 
 The common benchmark suite also intentionally only includes a few exported model
-formats that are widely used as compiler input and stable. The initial set
+formats that are stable and widely used as compiler input. The initial set
 includes:
 
 *   StableHLO
@@ -130,7 +129,7 @@ includes:
 
 For other exported model formats (e.g. Linalg MLIR from
 [torch-mlir](https://github.com/llvm/torch-mlir/tree/main)), compiler projects
-should import from the source model implementation and cache by themselves.
+should import from the source model and cache by themselves.
 
 #### Example of Common Benchmark Definitions and Using with Compilers
 
@@ -156,10 +155,9 @@ class ModelFormat(Enum):
 
 class DataFormat(Enum):
   """Types of input/output data format."""
-  # Frameworks can use different data layouts (e.g. NCHW, NHWC). So this
-  # provides information of what input/output data format a model uses.
-  # For a derived model, they usually use the same layout as its source
-  # framework model. Special data layout can be added if there is an exception.
+  # Frameworks have different data layouts (e.g. NCHW, NHWC). So this indicates
+  # the input/output data format a model uses. Derived models usually use the
+  # same layout as its source model. Other data layouts can be added if needed.
   TENSORFLOW_NUMPY = "tensorflow_numpy"
   PYTORCH_NUMPY = "pytorch_numpy"
   JAX_NUMPY = "jax_numpy"
@@ -175,9 +173,9 @@ class ModelDerivation :
   # - For the model implementation, it's the last git commit hash of the model's
   #   code directory.
   artifact_digest: str
-  # Input format, usually the same as its source model.
+  # Input format.
   input_format: DataFormat
-  # Output format, usually the same as its source model.
+  # Output format.
   output_format: DataFormat
 
 class Model:
@@ -196,8 +194,8 @@ class Model:
   derivations: Dict[ModelFormat, ModelDerivation]
 
 class Verifier:
-  """Verifier type with its parameters to verify model output."""
-  verifier_type: VerifierType
+  """Verification type with its parameters to verify model output."""
+  verification_type: VerificationType
   parameters: Dict[str, Any]
 
 class ModelTestData:
@@ -205,7 +203,7 @@ class ModelTestData:
   name: str
   # Information of the data source.
   source_info: str
-  # Stable (Versioned) (URL, digest) to download test data for each format.
+  # Versioned (URL, digest) to download test data for each format.
   artifacts: Dict[DataFormat, (str, str)]
   # Verifier with parameters (e.g. tolerance) for the expected output.
   verifier: Optional[Verifier]
@@ -253,7 +251,7 @@ BERT_ON_A100 = InferenceBenchmark(
 
 ### In module `data_verifier`
 def verify(verifier, model_output, expected_output_path) -> bool:
-  if verifier.verifier_type == VerifierType.NumPyGoldenValue:
+  if verifier.verification_type == VerificationType.NumpyGoldenValue:
     return verify_numpy_golden_value(model_output, expected_output_path,
       verifier.parameters)
   ...
@@ -379,10 +377,10 @@ and install the dependencies. The release can be set up if needed.
 
 The dependencies of the common benchmark suite should be minimized and not more
 than lightweight libraries such as
-[requests](https://requests.readthedocs.io/en/latest/). For model implementation
-involving ML frameworks, the extra `requirements.txt` will be stored with the
-model implementation and pin the package versions. It is not necessary to
-install it if you do not run with those models.
+[requests](https://requests.readthedocs.io/en/latest/). For model
+implementations involving ML frameworks, the extra `requirements.txt` will be
+stored with the model implementations and pin the package versions. It is not
+necessary to install it if you do not run with those models.
 
 The class definitions of the common benchmark suite should be stable with rare
 breaking changes once they are mature. It is important to not introduce extra
