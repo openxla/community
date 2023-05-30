@@ -334,3 +334,23 @@ on the raw data.
 
 The detailed technical designs are currently fleshed out, and we will present
 them in subsequent RFCs in the next weeks.
+
+## Discussions from Review
+
+[Review discussions](https://github.com/openxla/community/pull/75) have mostly
+been integrated into the RFC. Main open topics:
+
+1. How will OpenXLA contributors be able to extend the list of benchmarks?
+   Google is commited to bringing up the initial focus set, but we expect this
+   to evolve over time. We need to define how other contributors are able to
+   extend the list of benchmarks, which models will make it into the dashboards,
+   and how these will be maintained.
+1. There is interest in additional hardware support, some available on GCP (e.g.
+   ARM), some not (e.g. AMD GPUs). If an architecture is of broader interest to
+   the project, there should be a way to include it into the automated benchmark
+   runs. We need to agree on how these will be added, and who is willing to
+   provide the required resources.
+1. (Minor) Renaming to "OBI" has been brought up multiple times.
+
+[This comment](https://github.com/openxla/community/pull/75#discussion_r1203154669)
+mentiones the dimensions to consider for above in more detail.
