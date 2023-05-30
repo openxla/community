@@ -271,11 +271,16 @@ def benchmark_xla_gpu(common_benchmark):
   source_model = common_benchmark.model.derivations[
     common_benchmark.model.source_format
   ]
+  # XLA HLO model can be dumped and cached before benchmarking. Dump it here to
+  # demonstrate the whole workflow.
   dump_hlo_path = dump_xla_hlo(source_model)
 
   input_remote_path, input_digest = common_benchmark.input.artifacts[
     source_model.input_format
   ]
+  # The file fetching step can be done before benchmarking as all file
+  # dependencies are described in the benchmark definitions. Fetch them here
+  # for simplicity's sake.
   input_path = fetch_file(input_remote_path, input_digest)
   # Convert the source model input to numpy array. This might do nothing if the
   # source model is already using a compatible numpy format.
