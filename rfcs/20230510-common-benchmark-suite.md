@@ -124,8 +124,17 @@ In the common benchmark suite, the inference benchmarks are defined as:
 
 ```py
 ### In module `benchmark_framework`
+class ModelFormat(Enum):
+  """Supported framework/stable model formats."""
+  TENSORFLOW_V2 = "tensorflow_v2"
+  PYTORCH = "pytorch"
+  STABLEHLO = "stablehlo"
+  JAX = "jax"
+  TENSORFLOW_V2_SAVED_MODEL = "tensorflow_v2_saved_model"
+  TFLITE_FLATBUFFER = "tflite_flatbuffer"
+
 class DataFormat(Enum):
-  """Type of input/output data format."""
+  """Types of input/output data format."""
   # Frameworks can use different data layouts (e.g. NCHW, NHWC). So this
   # provides information of what input/output data format a model uses.
   # For a derived model, they usually use the same layout as its source
@@ -149,8 +158,8 @@ class ModelDerivation :
 class Model:
   """Model to benchmark with variety of formats derived from the same source."""
   name: str
-  # Framework type of the source model.
-  framework_type: str
+  # Source model format.
+  source_format: ModelFormat
   # Information of the source model.
   source_info: str
   # Model derivations in different formats, including the source framework
@@ -225,8 +234,7 @@ def verify(verifier, model_output, expected_output_path) -> bool:
 ```
 
 Here is a simple example of how the common benchmark suite can be used to run
-XLA:GPU compiler-level benchmarks with `bert_benchmark.BERT_ON_A100`. Use of
-input/output data and correctness checks have been omitted for brevity.
+XLA:GPU compiler-level benchmarks with `bert_benchmark.BERT_ON_A100`.
 
 ```py
 from openxla_benchmark import bert_benchmark, data_verifier
@@ -234,33 +242,42 @@ from openxla_benchmark import bert_benchmark, data_verifier
 RUN_HLO_MODULE_BINARY_PATH="/bazel-bin/tensorflow/run_hlo_module"
 
 def benchmark_xla_gpu(common_benchmark):
-  model_derive = common_benchmark.model.derivations[ModelFormat.HLO_DUMP]
-  hlo_path = download_file(model_derive.artifact)
+  source_model = common_benchmark.model.derivations[
+    common_benchmark.model.source_format
+  ]
+  dump_hlo_path = dump_xla_hlo(source_model)
 
   input_remote_path = common_benchmark.input.artifacts[
-    model_derive.input_format
+    source_model.input_format
   ]
   input_path = download_file(input_remote_path)
+  # Convert the source model input to numpy array. This might do nothing if the
+  # source model is already using a compatible numpy format.
+  numpy_input_path = convert_to_numpy_tensor(
+    source_model.input_format, input_path)
 
   cmd = [
     RUN_HLO_MODULE_BINARY_PATH,
     "--input_format=hlo",
     "--platform=gpu",
-    f"--input_module={hlo_path}",
-    f"--input_data=@{input_path}"
+    f"--input_module={dump_hlo_path}",
+    f"--input_data=@{numpy_input_path}"
   ]
   output = subprocess.run(cmd, ...)
 
   # Parse output into numpy array (details omitted).
-  tensor_output = parse_output(output)
+  numpy_output = parse_output(output)
+  # Convert the ouptut numpy array to source model output.
+  model_output = convert_from_numpy_tensor(
+    source_model.output_format, numpy_output)
 
   expected_output_remote_path = common_benchmark.expected_output.artifacts[
-    model_derive.output_format
+    source_model.output_format
   ]
   expected_output_path = download_file(expected_output_remote_path)
   verify_verdict = data_verifier.verify(
     verifier=common_benchmark.expected_output.verifier,
-    model_output=tensor_output,
+    model_output=model_output,
     expected_output_path=expected_output_path)
 
   return verify_verdict, metrics
