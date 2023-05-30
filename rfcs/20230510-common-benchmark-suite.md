@@ -107,7 +107,21 @@ JAX, PyTorch, Tensorflow). Framework-level benchmarks can import these
 implementations through Python modules. Utilities to compare the model output
 with the expected results will also be provided in the benchmark suite.
 
-The common benchmark suite intentionally only includes a few exported model
+Digests of all artifacts and model implementations are also included in the
+benchmark definition to help spot differences between benchmark runs (e.g. their
+changes might show impacts on regression tracking). The digest of a file
+artifact is its file hash. For a model implementation, the digest is the last
+git commit hash of its code directory in the repository.
+
+#### Collections of Benchmark Definitions
+
+Several collections of benchmarks will be defined in the common benchmark suite,
+initially for the comparative benchmarking. The benchmark collections are
+subject to growth overtime. An initial suite has been defined in the **Models**
+section of
+[OpenXLA Benchmarking Strategy](https://github.com/openxla/community/pull/75).
+
+The common benchmark suite also intentionally only includes a few exported model
 formats that are widely used as compiler input and stable. The initial set
 includes:
 
@@ -117,15 +131,7 @@ includes:
 
 For other exported model formats (e.g. Linalg MLIR from
 [torch-mlir](https://github.com/llvm/torch-mlir/tree/main)), compiler projects
-should import them from the source model implementation and cache by themselves.
-
-#### Collections of Benchmark Definitions
-
-Several collections of benchmarks will also be defined in the common benchmark
-suite, initially for the comparative benchmarking. The benchmark collections are
-subject to growth overtime. An initial suite has been defined in the **Models**
-section of
-[OpenXLA Benchmarking Strategy](https://github.com/openxla/community/pull/75).
+should import from the source model implementation and cache by themselves.
 
 #### Example of Common Benchmark Definitions and Using with Compilers
 
@@ -166,6 +172,10 @@ class ModelDerivation :
   #   to import the model module with `importlib.import_module`. This prevents
   #   pulling in unnecessary dependencies from those modules.
   aritfact: str
+  # - For the exported model, it's the hash digest of the artifact.
+  # - For the model implementation, it's the last git commit hash of the model's
+  #   code directory.
+  artifact_digest: str
   # Input format, usually same as its soruce model implementation.
   input_format: DataFormat
   # Output format, usually same as its soruce model implementation.
@@ -196,8 +206,8 @@ class ModelTestData:
   name: str
   # Information of the data source.
   source_info: str
-  # Stable (Versioned) URLs to download test data for each format.
-  artifacts: Dict[DataFormat, str]
+  # Stable (Versioned) (URL, digest) to download test data for each format.
+  artifacts: Dict[DataFormat, (str, str)]
   # Verifier with parameters (e.g. tolerance) for the expected output.
   verifier: Optional[Verifier]
 
@@ -263,10 +273,10 @@ def benchmark_xla_gpu(common_benchmark):
   ]
   dump_hlo_path = dump_xla_hlo(source_model)
 
-  input_remote_path = common_benchmark.input.artifacts[
+  input_remote_path, input_digest = common_benchmark.input.artifacts[
     source_model.input_format
   ]
-  input_path = download_file(input_remote_path)
+  input_path = fetch_file(input_remote_path, input_digest)
   # Convert the source model input to numpy array. This might do nothing if the
   # source model is already using a compatible numpy format.
   numpy_input_path = convert_to_numpy_tensor(
@@ -287,10 +297,10 @@ def benchmark_xla_gpu(common_benchmark):
   model_output = convert_from_numpy_tensor(
     source_model.output_format, numpy_output)
 
-  expected_output_remote_path = common_benchmark.expected_output.artifacts[
-    source_model.output_format
-  ]
-  expected_output_path = download_file(expected_output_remote_path)
+  expected_output_remote_path, expected_output_digest = (
+    common_benchmark.expected_output.artifacts[source_model.output_format])
+  expected_output_path = fetch_file(
+    expected_output_remote_path, expected_output_digest)
   verify_verdict = data_verifier.verify(
     verifier=common_benchmark.expected_output.verifier,
     model_output=model_output,
@@ -364,10 +374,10 @@ and install the dependencies. The release can be set up if needed.
 
 The dependencies of the common benchmark suite should be minimized and not more
 than lightweight libraries such as
-[requests](https://requests.readthedocs.io/en/latest/). For benchmarks involving
-ML frameworks, the extra `requirements.txt` will be stored with the benchmark
-definitions and pin the package versions. It is not necessary to install it if
-you do not run those benchmarks.
+[requests](https://requests.readthedocs.io/en/latest/). For model implementation
+involving ML frameworks, the extra `requirements.txt` will be stored with the
+model implementation and pin the package versions. It is not necessary to
+install it if you do not run with those models.
 
 The class definitions of the common benchmark suite should be stable with rare
 breaking changes once they are mature. It is important to not introduce extra
