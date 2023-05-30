@@ -124,30 +124,57 @@ In the common benchmark suite, the inference benchmarks are defined as:
 
 ```py
 ### In module `benchmark_framework`
+class DataFormat(Enum):
+  """Type of input/output data format."""
+  # Frameworks can use different data layouts (e.g. NCHW, NHWC). So this
+  # provides information of what input/output data format a model uses.
+  # For a derived model, they usually use the same layout as its source
+  # framework model. Special data layout can be added if there is an exception.
+  TENSORFLOW_NUMPY = "tensorflow_numpy"
+  PYTORCH_NUMPY = "pytorch_numpy"
+  JAX_NUMPY = "jax_numpy"
+
+class ModelDerivation :
+  model_format: ModelFormat
+  # - For the exported model, it's the versioned URL to fetch the model.
+  # - For the model implementation with framework, it's the Python module path
+  #   to import the model module with `importlib.import_module`. This prevents
+  #   pulling in unnecessary dependencies from those modules.
+  aritfact: str
+  # Input format, usually same as its soruce model implementation.
+  input_format: DataFormat
+  # Output format, usually same as its soruce model implementation.
+  output_format: DataFormat
+
 class Model:
   """Model to benchmark with variety of formats derived from the same source."""
   name: str
-  # - For the exported model, it's the URL to fetch the model.
-  # - For the model implementation with framework, it's the file path to import
-  #   the Python model module with `importlib.import_module`. This prevents
-  #   pulling in unnecessary dependencies from those modules.
-  model_artifacts: Dict[ModelFormat, str]
+  # Framework type of the source model.
+  framework_type: str
+  # Information of the source model.
+  source_info: str
+  # Model derivations in different formats, including the source framework
+  # implementation and its exported models.
+  # A single model may have multiple derivations for various ways it can be
+  # captured as input to a runtime. For instance, it could be an MLIR bytecode
+  # file of the StableHLO dialect, a TFLite flatbuffer, a TensorFlow Saved
+  # Model, or the original JAX source file.
+  derivations: Dict[ModelFormat, ModelDerivation]
 
-class TestDataFormat(Enum):
-  # Type of test data format.
-  NUMPY_INPUT = "numpy_input"
-  NUMPY_GOLDEN_VALUE = "numpy_golden_value"
+class Verifier:
+  """Verifier type with its parameters to verify model output."""
+  verifier_type: VerifierType
+  parameters: Dict[str, Any]
 
 class ModelTestData:
-  """Input and expected output data in variety of formats derived from the same
-  source (e.g., original text and its tokenized tensor)."""
+  """Input or expected output in variety of formats from the same source."""
   name: str
-  # - For numpy input, it's the URL to fetch .npy that serializes a tensor list.
-  # - For numpy golden value, it's the URL to fetch an archive includes .npy
-  #   of the golden values and a JSON to describe the comparison tolerance.
-  # The idea is to implement a verifier for each output TestDataFormat, which
-  # takes the expected output data and model output to return a verdict.
-  data_artifacts: Dict[TestDataFormat, str]
+  # Information of the data source.
+  source_info: str
+  # Stable (Versioned) URLs to download test data for each format.
+  artifacts: Dict[DataFormat, str]
+  # Verifier with parameters (e.g. tolerance) for the expected output.
+  verifier: Optional[Verifier]
 
 class DeviceSpec:
   """Device specification to run benchmarks."""
@@ -160,14 +187,14 @@ class DeviceSpec:
   # E.g., linux-x86_64
   host_environment: str
 
-  # Describes the target accelerator.
-  # E.g., cpu, gpu
+  # Describes the target accelerator (can be same as the host for CPU benchmarks).
+  # E.g., cpu, gpu, my-custom-accelerator 
   accelerator_type: str
   # E.g., nvidia-a100-40g
   accelerator_model: str
-  # E.g., intel-cascadelake, nvidia-ampere,
+  # E.g., intel-cascadelake, nvidia-ampere
   accelerator_architecture: str
-  # E.g., "num_of_gpus": 4
+  # E.g., "num_of_gpus": 4, "cpu_mask": "0-3"
   accelerator_attributes: Dict[str, Any]
 
 class InferenceBenchmark:
@@ -189,14 +216,12 @@ BERT_ON_A100 = InferenceBenchmark(
   ...
 )
 
-### In module `numpy_data_verifier`
-def verify_golden_value(model_output, golden_value_artifact) -> bool:
-  # Get the golden value with comparison config, e.g., mode, tolerance.
-  golden_value, compare_config = load_golden_value_and_tolerance(
-    golden_value_artifact)
-  # Compare the values with heuristics in compare_config.
-  return heuristic_compare(
-    model_output, golden_value, compare_config, tolerance)
+### In module `data_verifier`
+def verify(verifier, model_output, expected_output_path) -> bool:
+  if verifier.verifier_type == VerifierType.NumPyGoldenValue:
+    return verify_numpy_golden_value(model_output, expected_output_path,
+      verifier.parameters)
+  ...
 ```
 
 Here is a simple example of how the common benchmark suite can be used to run
@@ -204,18 +229,16 @@ XLA:GPU compiler-level benchmarks with `bert_benchmark.BERT_ON_A100`. Use of
 input/output data and correctness checks have been omitted for brevity.
 
 ```py
-from openxla_benchmark import bert_benchmark, numpy_data_verifier
+from openxla_benchmark import bert_benchmark, data_verifier
 
 RUN_HLO_MODULE_BINARY_PATH="/bazel-bin/tensorflow/run_hlo_module"
 
 def benchmark_xla_gpu(common_benchmark):
-  hlo_remote_path = common_benchmark.model.model_artifacts[
-    ModelFormat.HLO_DUMP
-  ]
-  hlo_path = download_file(hlo_remote_path)
+  model_derive = common_benchmark.model.derivations[ModelFormat.HLO_DUMP]
+  hlo_path = download_file(model_derive.artifact)
 
-  input_remote_path = ommon_benchmark.input.data_artifacts[
-    TestDataFormat.NUMPY_INPUT
+  input_remote_path = common_benchmark.input.artifacts[
+    model_derive.input_format
   ]
   input_path = download_file(input_remote_path)
 
@@ -231,14 +254,14 @@ def benchmark_xla_gpu(common_benchmark):
   # Parse output into numpy array (details omitted).
   tensor_output = parse_output(output)
 
-  expected_output_remote_path = common_benchmark.expected_output.data_artifacts[
-    TestDataFormat.NUMPY_GOLDEN_VALUE
+  expected_output_remote_path = common_benchmark.expected_output.artifacts[
+    model_derive.output_format
   ]
   expected_output_path = download_file(expected_output_remote_path)
-  # Compare output with the golden value.
-  verify_verdict = numpy_data_verifier.verify_golden_value(
+  verify_verdict = data_verifier.verify(
+    verifier=common_benchmark.expected_output.verifier,
     model_output=tensor_output,
-    golden_value_artifact=expected_output_path)
+    expected_output_path=expected_output_path)
 
   return verify_verdict, metrics
 ```
