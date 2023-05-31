@@ -442,3 +442,15 @@ SHARK highly integrates IREE and other compilers so it is not easy to reuse in
 the regression benchmarks without pulling in unnecessary dependencies. MLPerf
 doesn’t provide a common way to define models. And it is ad-hoc to run different
 types of models, which makes it hard to add new benchmarks.
+
+## Discussions from Review
+
+[Review discussions](https://github.com/openxla/community/pull/77) have been
+mostly addressed in the RFC. The remaining open questions listed below are more
+implementation-related and will be tracked in the `openxla-benchmark`
+repository:
+
+-   Are `Model`, `InferenceBenchmark` class generic enough.
+-   How to support multi-model workloads.
+-   Details on the separation of network access in the benchmark workflow.
+-   Details on the model output verification.
