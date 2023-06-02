@@ -19,4 +19,4 @@ The following organizations have committed to making a continued investment in t
 | Intel               | [intel.com](https://www.intel.com/)       | 09-2022        | 
 | Meta (PyTorch)      | [about.meta.com](https://about.meta.com/) | 09-2022        | 
 | NVIDIA              | [nvidia.com](https://www.nvidia.com/)     | 09-2022        | 
-| SiFive              | [sifive.com](https://www.sifive.com/)     | 06-2023        | 
+| SiFive              | [sifive.com](https://www.sifive.com/)     | 02-2023        | 
