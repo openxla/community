@@ -1,6 +1,6 @@
 # RFC: Establishing OpenXLA Core Maintainers
 
-**Authors:** Thea Lamkin, Eugene Burmako, Jaques Pienaar, Stephan Herhut
+**Authors:** Thea Lamkin, Eugene Burmako, Jacques Pienaar, Stephan Herhut
 
 **Last updated:** 2023-08-01
 
