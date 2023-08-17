@@ -1,3 +1,5 @@
+***Update:** Links to OpenXLA Monthly Community Meeting slides and recordings can now be found in our [notes doc](https://docs.google.com/document/d/161Tigj7rxgduI3kzIp_IsGNDkakIJUkv7E_44WSJ_aw/edit?usp=sharing).*
+
 # OpenXLA Meetings
 
 The OpenXLA community hosts regular meetings to discuss technical and community topics of interest to contributors, integrators, and users.
