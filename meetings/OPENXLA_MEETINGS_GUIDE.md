@@ -4,7 +4,7 @@
 
   * Cadence: Every third Tuesday of the month
   * Time: 8-9 AM PDT (3-4 PM UTC)
-  * Location: [Zoom](https://us02web.zoom.us/j/87557882524?pwd=QUJZQlZub0tRTk1CbCt4eFYzZ0lJUT09)
+  * Location: [Google Meet](http://meet.google.com/epx-gfvk-mud)
 
 ## Before Meeting: 
 
