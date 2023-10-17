@@ -2,7 +2,7 @@
 
 | Status        | Proposed                                                |
 | :------------ | :------------------------------------------------------ |
-| **RFC #**     | TBD |
+| **RFC #**     | [96](https://github.com/openxla/community/pull/96) |
 | **Authors** | Matt Walsh (walshmatt@google.com), Eugene Zhulenev (ezhulenev@google.com), Penporn Koanantakool (penporn@google.com), Benjamin Kramer (kramerb@google.com), Sara Smoot (sarasmoot@google.com)  |
 | **Sponsor**   | Andrew Leaver (andrewleaver@google.com)                        |
 | **Updated**   | 2023-10-16
