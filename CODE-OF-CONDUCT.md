@@ -1,16 +1,3 @@
-# RFC - Establishing OpenXLA Code of Conduct
-
-We would like to establish a code of conduct for the OpenXLA community. In this
-initial RFC, we will focus on the code of conduct itself and leave the
-definition of enforcement measures to a follow-on rfc.
-
-Currently, core maintainers also serve as the point of contact for code of
-conduct violations. We decided for this approach to reduce the number of
-committees we need to create and maintain. Should the need arise, we can
-transition to a dedicated code of conduct committee.
-
-Below is the text of the propose code of conduct.
-
 # OpenXLA Code of Conduct
 
 ## Our pledge

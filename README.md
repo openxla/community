@@ -28,7 +28,11 @@ project updates, and the development of `/xla` and `/stablehlo`.
 * [IREE](https://github.com/openxla/iree): MLIR-based end-to-end compiler and runtime for ML models. Note that IREE has its own comms channels (see its README).
 
 ## Code of Conduct
-Until an OpenXLA-specific Code of Conduct is in place, all community spaces for OpenXLA are subject to the [TensorFlow Code of Conduct](https://github.com/tensorflow/community/blob/master/CODE_OF_CONDUCT.md).
+
+We pledge to act and interact in ways that contribute to an open, welcoming,
+diverse, inclusive, and healthy community. See our 
+[code of conduct](https://github.com/openxla/community/blob/master/CODE-OF-CONDUCT.md)
+for details.
 
 ## Contacts
 
