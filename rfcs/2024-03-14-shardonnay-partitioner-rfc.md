@@ -99,7 +99,7 @@ We will start with a simple example and extend it as we describe additional feat
 
 // The 1st tensor dimension is sharded along axis "x" and the 2nd tensor dimension is
 // sharded along axis "z" then further along axis "y". The local shape of this tensor (i.e. the shape on a single device), would be tensor<2x1xf32>.
-sharding<@mesh_xy, [{"x"}, {"z","y"}]> : tensor<4x8xf32>
+sharding<@mesh_xy, [{"x"}, {"z", "y"}]> : tensor<4x8xf32>
 ```
 
 #### Invariants
@@ -130,6 +130,15 @@ A closed dimension is one that isn’t available for propagation to add further 
 
 We can extend the example from above to have an open dimension and a closed dimension.
 
+```c++
+@mesh_xy= <"x"=2, "y"=4, "z"=2>
+
+// The 1st dimension is closed, therefore it can't be further sharded and {"x"}
+// will remain its sharding. The 2nd dimension is open, and can therefore be
+// further sharded during propagation, e.g. by "y".
+sharding<@mesh_xy, [{"x"}, {"z", ?}]> : tensor<4x8xf32>
+```
+
 
 ### Explicitly replicated axes
 
@@ -137,9 +146,27 @@ An explicit set of axes that a tensor is replicated on. While it can be determin
 
 Ordering of replicated axes has no effect on how the data of a tensor is stored. But, for consistency only, the axes will be stored in the order they are specified in the top level mesh. For example, if the mesh is:
 
+```c++
+@mesh_xy = <"c"=2, "a"=2, "b"=2>
+```
+
 And we want axes `"a"` and `"c"` to be explicitly replicated, the order should be:
 
+```c++
+replicated={"c", "a"}
+```
+
 We can extend our example from above to have an explicitly replicated axis.
+
+```c++
+@mesh_xy= <"x"=2, "y"=4, "z"=2>
+
+// Since "y" is explicitly replicated, it can't be used to shard the 2nd
+// dimension that is open. However, "z" is implicitly replicated so it can be
+// used to shard that dimension. The local shape of this tensor (i.e. the shape
+// on a single device), would // be tensor<2x8xf32>.
+sharding<@mesh_xy, [{"x"}, {?}], replicated={"y"}> : tensor<4x8xf32>
+```
 
 
 ### Axis splitting and sub-axes
@@ -193,7 +220,7 @@ Going back to the example in motivation, we can shard the result as follows:
 @mesh_xy= <"x"=4>
 
 %arg0 : tensor<8xf32> {sdy.sharding=<@mesh_xy, [{"x"}]>}
-%0 = reshape %arg0 {sdy.sharding_per_value=<[<@mesh_xy, [{"x":(1)2}, {"x":(2)4}]>]>}
+%0 = reshape %arg0 {sdy.sharding_per_value=<[<@mesh_xy, [{"x":(1)2}, {"x":(2)2}]>]>}
     : (tensor<8xf32>) -> tensor<2x4xf32>
 ```
 
@@ -262,7 +289,17 @@ We provide two examples below:
 
 Users can specify multiple meshes with different named axes, that have the same order of devices. In this example, `<@mesh_0, "b">` is identical to `<@mesh_1, "z">.`
 
+```c++
+@mesh_0 = {<"a"=4, "b"=2>, devices=[0, 1, 2, 3, 4, 5, 6, 7]}
+@mesh_1 = {<"x"=2, "y"=2, "z"=2>, devices=[0, 1, 2, 3, 4, 5, 6, 7]}
+```
+
 Alternatively, users can specify shardings with an arbitrary order of devices and no axes names, in which case the meshes will have a different order of logical device IDs and default axis names.
+
+```c++
+@mesh_0 = {<"axis_0"=4, "axis_1"=2>, devices=[0, 1, 2, 3, 4, 5, 6, 7]}
+@mesh_1 = {<"axis_0"=4, "axis_1"=2>, devices=[7, 6, 5, 4, 3, 2, 1, 0]}
+```
 
 **Note**: we do not plan to propagate sharding across meshes. If we were to propagate across meshes in the future, device ordering would need to be taken into consideration. The corresponding reshards may be introduced if necessary.
 
@@ -318,6 +355,6 @@ For example:
 
 // Both dimension shardings here are invalid because the dimension is already fully
 // sharded without the minor-most (rightmost) axis.
-sharding<@mesh_xy, [{"x"}, {"y","z"}]> : tensor<1x4xf32>
+sharding<@mesh_xy, [{"x"}, {"y", "z"}]> : tensor<1x4xf32>
 ```
 
