@@ -36,6 +36,4 @@ for details.
 
 ## Contacts
 
-For administrative questions, contact Thea Lamkin - thealamkin at google 
-
-
+* For questions, contact the maintainers - maintainers at openxla.org
