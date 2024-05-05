@@ -1,5 +1,7 @@
 # OpenXLA Governance
 
+**🚨 This is effectively deprecated and to be replaced with the more streamlined form mentioned in community meeting. 🚨**
+
 Our governance process is heavily influenced by the great work done at
 formalizing these mechanism by other existing projects like PyTorch and Carbon,
 as well as our experience with the LLVM culture. The structure we adopt is
