@@ -11,7 +11,7 @@ All meetings are free to join and recorded. Recordings can be found on the [Open
 ## OpenXLA Community Meeting
 
 * ***Next meeting: Tuesday, May 21, 2024 @9AM PT***
-* Regular schedule: Monthly, 3rd Tuesday @8AM PT
+* Regular schedule: Monthly, 2nd or 3rd Tuesday @9AM PT (see above or openxla-discuss to confirm).
 * Project updates & tech talks
 * Announced in [openxla-discuss](https://groups.google.com/a/openxla.org/g/openxla-discuss)
 * [Doc](https://docs.google.com/document/d/161Tigj7rxgduI3kzIp_IsGNDkakIJUkv7E_44WSJ_aw/)
