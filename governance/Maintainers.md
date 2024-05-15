@@ -1,10 +1,15 @@
 # OpenXLA Maintainers
 
-According to the [OpenXLA project governance](https://github.com/openxla/community/blob/main/GOVERNANCE.md),
-this document lists the Core Maintainers, as well as define the Modules and the
-list of maintainers.
+Member            | GitHub     |
+----------------- | ---------- |
+Andy Davis        | andydavis1
+David Dunleavy    | ddunl
+Elliot English    | elliotenglish
+Eugene Zhulenev   | ezhulenev
+George Karpenkov  | cheshire
+Kevin Gleason     | gleasonk
 
-## Core Maintainers
+## Emeritus Core Maintainers
 
 Member          | GitHub     | Role
 --------------- | ---------- | --------------------
@@ -14,7 +19,3 @@ Mehdi Amini     | joker-eph  | Core Maintainer
 Stephan Herhut  | sherhut    | Core Maintainer
 Thea Lamkin     | theadactyl | Core Maintainer
 
-## Modules
-
-Defining modules and their maintainers is a work-in-progress, you may inquire the
-Core Maintainer team about this.
