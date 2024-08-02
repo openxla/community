@@ -4,7 +4,7 @@ Member            | GitHub     |
 ----------------- | ---------- |
 Andy Davis        | andydavis1
 David Dunleavy    | ddunl
-Elliot English    | elliotenglish
+Cyril Bortolato   | borto
 Eugene Zhulenev   | ezhulenev
 George Karpenkov  | cheshire
 Kevin Gleason     | gleasonk
