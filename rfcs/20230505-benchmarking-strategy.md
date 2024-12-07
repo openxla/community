@@ -264,12 +264,13 @@ small, curated and representative list of models.
 
 | Name | Param Count | Format | Data Types | BM Type | Targets |
 |--------------------|-------------|--------------|------------|---------------------|-----------|
-| FermiNet/Psiformer | O(1M) | JAX | f32 | Training | CUDA | | AlphaFold 2 |
-O(1B) | JAX | fp16, fp32 | Inference | CUDA | | ResNet-50 | 29M | TF, PyTorch |
-fp16, fp32 | Inference | CUDA, x86 | | BERT-Large | 330M | TF, PyTorch | fp16,
-fp32 | Training, Inference | CUDA, x86 | | T5-Large | 770M | TF, PyTorch | fp16,
-fp32 | Inference | CUDA, x86 | | GPT-3 | 175B | JAX, PyTorch | fp16, fp32 |
-Training | CUDA | | DLRM | 25B | PyTorch | fp16, fp32 | Inference | CUDA, x86 |
+| FermiNet/Psiformer | O(1M) | JAX | f32 | Training | CUDA |
+| AlphaFold 2 | O(1B) | JAX | fp16, fp32 | Inference | CUDA |
+| ResNet-50 | 29M | TF, PyTorch | fp16, fp32 | Inference | CUDA, x86 |
+| BERT-Large | 330M | TF, PyTorch | fp16, fp32 | Training, Inference | CUDA, x86 |
+| T5-Large | 770M | TF, PyTorch | fp16, fp32 | Inference | CUDA, x86 |
+| GPT-3 | 175B | JAX, PyTorch | fp16, fp32 | Training | CUDA |
+| DLRM | 25B | PyTorch | fp16, fp32 | Inference | CUDA, x86 |
 
 ## Design Overview
 
