@@ -9,7 +9,6 @@ OpenXLA is a community-driven, open source ML compiler ecosystem, using the best
 ## Communication Channels 
 
 * **[`openxla-discuss` Mailing List](https://groups.google.com/a/openxla.org/g/openxla-discuss)** - Technical and community conversations about the OpenXLA project & its components, community meeting invitations & agendas. This is our primary channel. 
-* [`openxla-announce` Mailing List](https://groups.google.com/a/openxla.org/g/openxla-announce) - Less frequent announcements from OpenXLA project maintainers, including project news, events and major releases.
 * [OpenXLA Discord](https://discord.gg/NNvMJ2yd7a) - Synchronous chat about top-level
 project updates, and the development of `/xla` and `/stablehlo`.
 * [IREE Discord](https://discord.gg/BexW7bgHqm) - Synchronous chat about the development of `/iree`.
