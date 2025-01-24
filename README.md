@@ -24,7 +24,7 @@ project updates, and the development of `/xla` and `/stablehlo`.
 
 * [StableHLO](https://github.com/openxla/stablehlo): Portability layer between ML frameworks and ML compilers.
 * [XLA](https://github.com/openxla/xla): Main XLA codebase (being migrated from tensorflow/compiler/xla).
-* [IREE](https://github.com/openxla/iree): MLIR-based end-to-end compiler and runtime for ML models. Note that IREE has its own comms channels (see its README).
+* [Shardy] https://github.com/openxla/shardy: Shardy is an MLIR-based tensor partitioning system for all dialects.
 
 ## Code of Conduct
 
